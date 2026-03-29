@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Cards — WebFunHub</title>
+  <meta name="description" content="Test your memory with this card matching game. Flip cards and find all pairs before time runs out!">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .mem-grid { display:grid; gap:10px; max-width:500px; margin:0 auto; padding:24px; }
+    .mem-grid.size-4 { grid-template-columns:repeat(4,1fr); }
+    .mem-grid.size-6 { grid-template-columns:repeat(4,1fr); }
+    .mem-card {
+      aspect-ratio:1; perspective:600px; cursor:pointer;
+    }
+    .mem-card-inner {
+      width:100%; height:100%; position:relative; transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);
+      transform-style:preserve-3d;
+    }
+    .mem-card.flipped .mem-card-inner,
+    .mem-card.matched .mem-card-inner { transform:rotateY(180deg); }
+    .mem-card-front, .mem-card-back {
+      position:absolute; inset:0; border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center;
+      backface-visibility:hidden; -webkit-backface-visibility:hidden;
+    }
+    .mem-card-front {
+      background:linear-gradient(135deg,var(--bg-card-hover),var(--bg-card)); border:1px solid var(--border-color);
+      font-size:1.8rem; color:var(--accent-secondary);
+    }
+    .mem-card-front:hover { border-color:var(--border-hover); }
+    .mem-card-back {
+      background:linear-gradient(135deg,#2d1b69,#1a1a2e); border:1px solid var(--accent-primary);
+      transform:rotateY(180deg); font-size:2.5rem;
+    }
+    .mem-card.matched .mem-card-back { background:linear-gradient(135deg,#1a4a3a,#1a2e1a); border-color:var(--accent-green); }
+    .mem-diff-select { display:flex; gap:8px; justify-content:center; margin-bottom:16px; }
+    .mem-diff-btn {
+      padding:8px 20px; border-radius:50px; border:1px solid var(--border-color); background:var(--bg-card);
+      color:var(--text-secondary); cursor:pointer; font-family:'Inter',sans-serif; font-size:0.85rem; font-weight:500; transition:var(--transition);
+    }
+    .mem-diff-btn.active { background:rgba(124,58,237,0.15); color:var(--accent-tertiary); border-color:var(--accent-primary); }
+    .mem-complete {
+      text-align:center; padding:32px; display:none;
+    }
+    .mem-complete h2 { font-family:'Outfit',sans-serif; font-size:2rem; margin-bottom:8px; }
+    .mem-complete p { color:var(--text-secondary); }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <a href="../index.html" class="nav-brand"><div class="nav-brand-icon">W</div><span class="nav-brand-text">WebFunHub</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">Home</a></li><li><a href="../index.html#games" class="active">Games</a></li><li><a href="../index.html#tools">Tools</a></li>
+    </ul>
+    <button class="nav-menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+  </nav>
+
+  <div class="ad-banner" style="margin-top:80px;max-width:728px;">⬒ Ad Space — 728×90</div>
+
+  <main class="game-page">
+    <div class="game-page-header">
+      <a href="../index.html#games" class="game-page-back">← Back to Games</a>
+      <h1 class="game-page-title">🃏 Memory Cards</h1>
+      <div class="game-page-meta"><span class="game-page-tag">Memory</span><span class="game-page-tag">Puzzle</span></div>
+    </div>
+
+    <div class="game-container">
+      <div class="game-score-bar">
+        <div class="game-score-item">
+          <span class="game-score-label">Moves</span>
+          <span class="game-score-value" id="moves">0</span>
+        </div>
+        <div class="game-score-item">
+          <span class="game-score-label">Pairs</span>
+          <span class="game-score-value" id="pairs">0 / 0</span>
+        </div>
+        <div class="game-score-item">
+          <span class="game-score-label">Time</span>
+          <span class="game-score-value" id="timer">0:00</span>
+        </div>
+      </div>
+
+      <div class="mem-diff-select">
+        <button class="mem-diff-btn active" onclick="setDiff(4)">Easy (4×4)</button>
+        <button class="mem-diff-btn" onclick="setDiff(6)">Hard (4×6)</button>
+      </div>
+
+      <div class="mem-grid size-4" id="grid"></div>
+
+      <div class="mem-complete" id="complete">
+        <h2>🎉 You Win!</h2>
+        <p id="completeMsg"></p>
+      </div>
+
+      <div class="game-controls">
+        <button class="game-btn game-btn-primary" onclick="resetGame()">↻ New Game</button>
+      </div>
+    </div>
+
+    <div class="game-instructions">
+      <h3>📖 How to Play</h3>
+      <ul>
+        <li>Click a card to flip it over</li>
+        <li>Click a second card to try to find a match</li>
+        <li>If they match, they stay flipped. If not, they flip back</li>
+        <li>Find all pairs to win the game</li>
+        <li>Try to complete it in the fewest moves possible</li>
+      </ul>
+    </div>
+  </main>
+
+  <div class="ad-banner" style="max-width:728px;margin:24px auto;">⬒ Ad Space — 728×90</div>
+  <footer class="footer"><div class="footer-bottom">&copy; 2026 WebFunHub. All rights reserved.</div></footer>
+
+  <script>
+    document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));
+    window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20));
+
+    const EMOJIS = ['🎮','🎲','🎯','🏆','⚡','🔥','💎','🌟','🎪','🎨','🎵','🚀'];
+    let cards, flipped, matched, moves, totalPairs, timerInterval, seconds, locked, gridSize;
+
+    function setDiff(size) {
+      gridSize = size;
+      document.querySelectorAll('.mem-diff-btn').forEach(b=>b.classList.remove('active'));
+      event.target.classList.add('active');
+      resetGame();
+    }
+
+    function shuffle(arr) {
+      for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+      return arr;
+    }
+
+    function resetGame() {
+      clearInterval(timerInterval);
+      const grid = document.getElementById('grid');
+      const numPairs = gridSize === 6 ? 12 : 8;
+      totalPairs = numPairs;
+      const emojis = shuffle([...EMOJIS]).slice(0, numPairs);
+      cards = shuffle([...emojis, ...emojis]);
+      flipped = [];
+      matched = 0;
+      moves = 0;
+      seconds = 0;
+      locked = false;
+
+      grid.className = 'mem-grid size-' + gridSize;
+      document.getElementById('moves').textContent = '0';
+      document.getElementById('pairs').textContent = `0 / ${totalPairs}`;
+      document.getElementById('timer').textContent = '0:00';
+      document.getElementById('complete').style.display = 'none';
+
+      grid.innerHTML = cards.map((emoji,i) => `
+        <div class="mem-card" onclick="flipCard(${i})" id="card-${i}">
+          <div class="mem-card-inner">
+            <div class="mem-card-front">?</div>
+            <div class="mem-card-back">${emoji}</div>
+          </div>
+        </div>
+      `).join('');
+
+      timerInterval = setInterval(()=>{
+        seconds++;
+        const m = Math.floor(seconds/60);
+        const s = seconds%60;
+        document.getElementById('timer').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+      },1000);
+    }
+
+    function flipCard(idx) {
+      if(locked) return;
+      const card = document.getElementById('card-'+idx);
+      if(card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+      card.classList.add('flipped');
+      flipped.push(idx);
+
+      if(flipped.length === 2) {
+        moves++;
+        document.getElementById('moves').textContent = moves;
+        locked = true;
+
+        const [a,b] = flipped;
+        if(cards[a] === cards[b]) {
+          document.getElementById('card-'+a).classList.add('matched');
+          document.getElementById('card-'+b).classList.add('matched');
+          matched++;
+          document.getElementById('pairs').textContent = `${matched} / ${totalPairs}`;
+          flipped = [];
+          locked = false;
+
+          if(matched === totalPairs) {
+            clearInterval(timerInterval);
+            const m = Math.floor(seconds/60);
+            const s = seconds%60;
+            document.getElementById('complete').style.display = 'block';
+            document.getElementById('completeMsg').textContent = `Completed in ${moves} moves and ${m}:${s.toString().padStart(2,'0')}!`;
+          }
+        } else {
+          setTimeout(()=>{
+            document.getElementById('card-'+a).classList.remove('flipped');
+            document.getElementById('card-'+b).classList.remove('flipped');
+            flipped = [];
+            locked = false;
+          },800);
+        }
+      }
+    }
+
+    gridSize = 4;
+    resetGame();
+  </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Brick Wall - WebFunHub</title><meta name="description" content="6 rows of bricks to smash">
+<link rel="stylesheet" href="../style.css"></head><body>
+<nav class="navbar" id="nb"><a href="../index.html" class="nav-brand"><div class="nav-brand-icon">W</div><span class="nav-brand-text">WebFunHub</span></a>
+<ul class="nav-links" id="nl"><li><a href="../index.html">Home</a></li><li><a href="../index.html#games" class="active">Games</a></li></ul>
+<button class="nav-menu-btn" id="mb" aria-label="Menu">â˜°</button></nav>
+<div class="ad-banner" style="margin-top:80px;max-width:728px">Ad Space</div>
+<main class="game-page"><div class="game-page-header"><a href="../index.html#games" class="game-page-back">â† Back</a>
+<h1 class="game-page-title">Brick Wall</h1><div class="game-page-meta"><span class="game-page-tag">Arcade</span></div></div><div class="game-container"><div class="game-score-bar"><div class="game-score-item"><span class="game-score-label">Score</span>
+<span class="game-score-value" id="sc">0</span></div><div class="game-score-item"><span class="game-score-label">Lives</span>
+<span class="game-score-value" id="lv">3</span></div></div>
+<div class="game-canvas-wrap"><canvas id="c" width="500" height="400"></canvas></div>
+<div class="game-controls"><button class="game-btn game-btn-primary" id="sb" onclick="start()">â–¶ Start</button>
+<button class="game-btn game-btn-secondary" onclick="reset()">â†» Restart</button></div></div>
+<div class="game-instructions"><h3>ðŸ“– How to Play</h3><ul><li>Move mouse or touch to control paddle</li><li>Break all bricks to win</li><li>Don't let the ball fall!</li></ul></div>
+<script>
+const cv=document.getElementById('c'),cx=cv.getContext('2d');
+const BR=6,BC=8,BW=(cv.width-20)/BC,BH=20,BS=4,PW=90;
+let bricks,ball,paddle,sc,lives,running=false,anim;
+const colors=['#a855f7','#3b82f6','#ec4899','#10b981','#f59e0b','#06b6d4'];
+function init(){bricks=[];for(let r=0;r<BR;r++)for(let c=0;c<BC;c++)bricks.push({x:10+c*BW,y:40+r*(BH+4),w:BW-4,h:BH,alive:true,color:colors[r%colors.length]});
+ball={x:cv.width/2,y:cv.height-60,dx:BS*(Math.random()>.5?1:-1),dy:-BS,r:6};
+paddle={x:cv.width/2-PW/2,w:PW,h:12};sc=0;lives=3;running=false;
+document.getElementById('sc').textContent=0;document.getElementById('lv').textContent=3;draw();}
+function draw(){cx.fillStyle='#0f0f1a';cx.fillRect(0,0,cv.width,cv.height);
+bricks.forEach(b=>{if(!b.alive)return;cx.fillStyle=b.color;cx.beginPath();cx.roundRect(b.x,b.y,b.w,b.h,4);cx.fill();});
+cx.shadowColor='#a855f7';cx.shadowBlur=10;cx.fillStyle='#f1f5f9';cx.beginPath();cx.arc(ball.x,ball.y,ball.r,0,Math.PI*2);cx.fill();cx.shadowBlur=0;
+cx.fillStyle='#a855f7';cx.beginPath();cx.roundRect(paddle.x,cv.height-20,paddle.w,paddle.h,6);cx.fill();
+if(!running){cx.fillStyle='rgba(0,0,0,.5)';cx.fillRect(0,0,cv.width,cv.height);cx.fillStyle='#f1f5f9';cx.font='bold 20px Outfit';cx.textAlign='center';
+cx.fillText(lives<=0?'Game Over! Score: '+sc:'Press Start',cv.width/2,cv.height/2);}}
+function update(){ball.x+=ball.dx;ball.y+=ball.dy;
+if(ball.x<=ball.r||ball.x>=cv.width-ball.r)ball.dx*=-1;
+if(ball.y<=ball.r)ball.dy*=-1;
+if(ball.y>=cv.height-20-ball.r&&ball.x>=paddle.x&&ball.x<=paddle.x+paddle.w){ball.dy=-Math.abs(ball.dy);
+let hit=(ball.x-(paddle.x+paddle.w/2))/(paddle.w/2);ball.dx=hit*BS*1.5;}
+if(ball.y>cv.height){lives--;document.getElementById('lv').textContent=lives;
+if(lives<=0){running=false;cancelAnimationFrame(anim);draw();return;}
+ball.x=cv.width/2;ball.y=cv.height-60;ball.dx=BS*(Math.random()>.5?1:-1);ball.dy=-BS;}
+bricks.forEach(b=>{if(!b.alive)return;if(ball.x>b.x&&ball.x<b.x+b.w&&ball.y-ball.r<b.y+b.h&&ball.y+ball.r>b.y){
+b.alive=false;ball.dy*=-1;sc+=10;document.getElementById('sc').textContent=sc;}});
+if(bricks.every(b=>!b.alive)){running=false;cancelAnimationFrame(anim);}}
+function loop(){if(!running)return;update();draw();anim=requestAnimationFrame(loop);}
+function start(){if(running)return;if(lives<=0)init();running=true;document.getElementById('sb').textContent='Playing...';loop();}
+function reset(){cancelAnimationFrame(anim);document.getElementById('sb').textContent='â–¶ Start';init();}
+cv.onmousemove=e=>{let r=cv.getBoundingClientRect();paddle.x=Math.min(Math.max(0,e.clientX-r.left-paddle.w/2),cv.width-paddle.w);if(running)draw();};
+cv.ontouchmove=e=>{e.preventDefault();let r=cv.getBoundingClientRect();let t=e.touches[0];paddle.x=Math.min(Math.max(0,t.clientX-r.left-paddle.w/2),cv.width-paddle.w);};
+init();
+</script></main><div class="ad-banner" style="max-width:728px;margin:24px auto">Ad Space</div>
+<footer class="footer"><div class="footer-bottom">Â© 2026 WebFunHub</div></footer>
+<script>document.getElementById('mb').onclick=()=>document.getElementById('nl').classList.toggle('open');
+window.onscroll=()=>document.getElementById('nb').classList.toggle('scrolled',scrollY>20);</script></body></html>

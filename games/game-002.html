@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Toe — WebFunHub</title>
+  <meta name="description" content="Play Tic Tac Toe against a smart AI opponent. Free browser game, no downloads needed.">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .ttt-board { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; max-width:360px; margin:0 auto; padding:24px; }
+    .ttt-cell {
+      aspect-ratio:1; background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--radius-md);
+      display:flex; align-items:center; justify-content:center; font-family:'Outfit',sans-serif; font-size:2.8rem; font-weight:700;
+      cursor:pointer; transition:var(--transition); color:var(--text-primary); user-select:none;
+    }
+    .ttt-cell:hover { background:var(--bg-card-hover); border-color:var(--border-hover); }
+    .ttt-cell.x { color:#a855f7; text-shadow:0 0 20px rgba(168,85,247,0.4); }
+    .ttt-cell.o { color:#3b82f6; text-shadow:0 0 20px rgba(59,130,246,0.4); }
+    .ttt-cell.win { background:rgba(16,185,129,0.15); border-color:var(--accent-green); }
+    .ttt-cell.disabled { pointer-events:none; }
+    .ttt-status {
+      text-align:center; font-family:'Outfit',sans-serif; font-size:1.3rem; font-weight:600;
+      padding:16px; color:var(--text-primary);
+    }
+    .ttt-mode-select { display:flex; gap:8px; justify-content:center; margin-bottom:16px; }
+    .ttt-mode-btn {
+      padding:8px 20px; border-radius:50px; border:1px solid var(--border-color); background:var(--bg-card);
+      color:var(--text-secondary); cursor:pointer; font-family:'Inter',sans-serif; font-size:0.85rem; font-weight:500; transition:var(--transition);
+    }
+    .ttt-mode-btn.active { background:rgba(124,58,237,0.15); color:var(--accent-tertiary); border-color:var(--accent-primary); }
+    .ttt-scoreboard { display:flex; gap:24px; justify-content:center; padding:12px 24px; }
+    .ttt-sb-item { text-align:center; }
+    .ttt-sb-label { font-size:0.72rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); }
+    .ttt-sb-val { font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:700; }
+    .ttt-sb-x .ttt-sb-val { color:#a855f7; }
+    .ttt-sb-o .ttt-sb-val { color:#3b82f6; }
+    .ttt-sb-d .ttt-sb-val { color:var(--text-muted); }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <a href="../index.html" class="nav-brand"><div class="nav-brand-icon">W</div><span class="nav-brand-text">WebFunHub</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">Home</a></li><li><a href="../index.html#games" class="active">Games</a></li><li><a href="../index.html#tools">Tools</a></li>
+    </ul>
+    <button class="nav-menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+  </nav>
+
+  <div class="ad-banner" style="margin-top:80px;max-width:728px;">⬒ Ad Space — 728×90</div>
+
+  <main class="game-page">
+    <div class="game-page-header">
+      <a href="../index.html#games" class="game-page-back">← Back to Games</a>
+      <h1 class="game-page-title">❌ Tic Tac Toe</h1>
+      <div class="game-page-meta"><span class="game-page-tag">Strategy</span><span class="game-page-tag">Classic</span></div>
+    </div>
+
+    <div class="game-container">
+      <div class="ttt-mode-select">
+        <button class="ttt-mode-btn active" onclick="setMode('ai')">vs AI</button>
+        <button class="ttt-mode-btn" onclick="setMode('2p')">2 Players</button>
+      </div>
+      <div class="ttt-scoreboard">
+        <div class="ttt-sb-item ttt-sb-x"><div class="ttt-sb-label">X (You)</div><div class="ttt-sb-val" id="scoreX">0</div></div>
+        <div class="ttt-sb-item ttt-sb-d"><div class="ttt-sb-label">Draws</div><div class="ttt-sb-val" id="scoreD">0</div></div>
+        <div class="ttt-sb-item ttt-sb-o"><div class="ttt-sb-label">O (AI)</div><div class="ttt-sb-val" id="scoreO">0</div></div>
+      </div>
+      <div class="ttt-status" id="status">Your turn (X)</div>
+      <div class="ttt-board" id="board"></div>
+      <div class="game-controls">
+        <button class="game-btn game-btn-primary" onclick="resetGame()">↻ New Game</button>
+        <button class="game-btn game-btn-secondary" onclick="resetAll()">Reset Scores</button>
+      </div>
+    </div>
+
+    <div class="game-instructions">
+      <h3>📖 How to Play</h3>
+      <ul>
+        <li>Click any empty cell to place your mark (X)</li>
+        <li>Get three in a row (horizontal, vertical, or diagonal) to win</li>
+        <li>Play against AI or a friend in 2-player mode</li>
+        <li>AI uses minimax algorithm — try to beat it!</li>
+      </ul>
+    </div>
+  </main>
+
+  <div class="ad-banner" style="max-width:728px;margin:24px auto;">⬒ Ad Space — 728×90</div>
+  <footer class="footer"><div class="footer-bottom">&copy; 2026 WebFunHub. All rights reserved.</div></footer>
+
+  <script>
+    document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));
+    window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20));
+
+    let board, currentPlayer, gameActive, mode, scores;
+    const WINS = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+    scores = {X:0, O:0, D:0};
+
+    function setMode(m) {
+      mode = m;
+      document.querySelectorAll('.ttt-mode-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelector(`.ttt-mode-btn[onclick="setMode('${m}')"]`).classList.add('active');
+      const lbl = document.querySelector('.ttt-sb-o .ttt-sb-label');
+      lbl.textContent = m==='ai' ? 'O (AI)' : 'O (P2)';
+      resetGame();
+    }
+
+    function resetGame() {
+      board = Array(9).fill('');
+      currentPlayer = 'X';
+      gameActive = true;
+      updateStatus();
+      renderBoard();
+    }
+
+    function resetAll() {
+      scores = {X:0, O:0, D:0};
+      updateScores();
+      resetGame();
+    }
+
+    function renderBoard() {
+      const el = document.getElementById('board');
+      el.innerHTML = board.map((cell,i) =>
+        `<div class="ttt-cell ${cell.toLowerCase()} ${!gameActive?'disabled':''}" onclick="makeMove(${i})" id="cell-${i}">${cell}</div>`
+      ).join('');
+    }
+
+    function updateStatus() {
+      const s = document.getElementById('status');
+      if (!gameActive) return;
+      if (mode === 'ai') {
+        s.textContent = currentPlayer === 'X' ? 'Your turn (X)' : 'AI thinking...';
+      } else {
+        s.textContent = `Player ${currentPlayer}'s turn`;
+      }
+    }
+
+    function updateScores() {
+      document.getElementById('scoreX').textContent = scores.X;
+      document.getElementById('scoreO').textContent = scores.O;
+      document.getElementById('scoreD').textContent = scores.D;
+    }
+
+    function checkWin(b, p) {
+      return WINS.find(w => w.every(i => b[i] === p));
+    }
+
+    function checkDraw(b) {
+      return b.every(c => c !== '');
+    }
+
+    function makeMove(i) {
+      if (!gameActive || board[i] !== '') return;
+      board[i] = currentPlayer;
+      renderBoard();
+
+      const winCombo = checkWin(board, currentPlayer);
+      if (winCombo) {
+        gameActive = false;
+        winCombo.forEach(idx => document.getElementById('cell-'+idx).classList.add('win'));
+        scores[currentPlayer]++;
+        updateScores();
+        document.getElementById('status').textContent = mode==='ai' ? (currentPlayer==='X'?'You win! 🎉':'AI wins!') : `Player ${currentPlayer} wins! 🎉`;
+        renderBoard();
+        return;
+      }
+      if (checkDraw(board)) {
+        gameActive = false;
+        scores.D++;
+        updateScores();
+        document.getElementById('status').textContent = "It's a draw!";
+        return;
+      }
+
+      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+      updateStatus();
+
+      if (mode === 'ai' && currentPlayer === 'O' && gameActive) {
+        setTimeout(aiMove, 400);
+      }
+    }
+
+    function minimax(b, depth, isMax) {
+      if (checkWin(b, 'O')) return 10 - depth;
+      if (checkWin(b, 'X')) return depth - 10;
+      if (checkDraw(b)) return 0;
+
+      if (isMax) {
+        let best = -Infinity;
+        for (let i=0;i<9;i++) {
+          if (b[i]==='') { b[i]='O'; best=Math.max(best,minimax(b,depth+1,false)); b[i]=''; }
+        }
+        return best;
+      } else {
+        let best = Infinity;
+        for (let i=0;i<9;i++) {
+          if (b[i]==='') { b[i]='X'; best=Math.min(best,minimax(b,depth+1,true)); b[i]=''; }
+        }
+        return best;
+      }
+    }
+
+    function aiMove() {
+      let bestScore = -Infinity, bestMove = -1;
+      for (let i=0;i<9;i++) {
+        if (board[i]==='') {
+          board[i]='O';
+          const s = minimax(board, 0, false);
+          board[i]='';
+          if (s > bestScore) { bestScore=s; bestMove=i; }
+        }
+      }
+      if (bestMove !== -1) makeMove(bestMove);
+    }
+
+    mode = 'ai';
+    resetGame();
+  </script>
+</body>
+</html>

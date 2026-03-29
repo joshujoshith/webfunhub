@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Snake Challenge - WebFunHub</title><meta name="description" content="Medium grid, fast speed, walls on">
+<link rel="stylesheet" href="../style.css"></head><body>
+<nav class="navbar" id="nb"><a href="../index.html" class="nav-brand"><div class="nav-brand-icon">W</div><span class="nav-brand-text">WebFunHub</span></a>
+<ul class="nav-links" id="nl"><li><a href="../index.html">Home</a></li><li><a href="../index.html#games" class="active">Games</a></li></ul>
+<button class="nav-menu-btn" id="mb" aria-label="Menu">â˜°</button></nav>
+<div class="ad-banner" style="margin-top:80px;max-width:728px">Ad Space</div>
+<main class="game-page"><div class="game-page-header"><a href="../index.html#games" class="game-page-back">â† Back</a>
+<h1 class="game-page-title">Snake Challenge</h1><div class="game-page-meta"><span class="game-page-tag">Arcade</span></div></div><div class="game-container"><div class="game-score-bar"><div class="game-score-item"><span class="game-score-label">Score</span>
+<span class="game-score-value" id="sc">0</span></div><div class="game-score-item"><span class="game-score-label">Best</span>
+<span class="game-score-value" id="bs">0</span></div></div>
+<div class="game-canvas-wrap"><canvas id="c" width="360" height="360"></canvas></div>
+<div class="game-controls"><button class="game-btn game-btn-primary" id="sb" onclick="start()">â–¶ Start</button>
+<button class="game-btn game-btn-secondary" onclick="reset()">â†» Restart</button></div></div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:200px;margin:16px auto">
+<div></div><button class="game-btn game-btn-secondary" onclick="cd(0,-1)" style="padding:12px;font-size:1.1rem">â–²</button><div></div>
+<button class="game-btn game-btn-secondary" onclick="cd(-1,0)" style="padding:12px;font-size:1.1rem">â—€</button>
+<button class="game-btn game-btn-secondary" onclick="cd(0,1)" style="padding:12px;font-size:1.1rem">â–¼</button>
+<button class="game-btn game-btn-secondary" onclick="cd(1,0)" style="padding:12px;font-size:1.1rem">â–¶</button></div>
+<div class="game-instructions"><h3>ðŸ“– How to Play</h3><ul><li>Arrow keys or WASD to move</li><li>Eat food to grow</li><li>Don't crash!</li></ul></div>
+<script>
+const cv=document.getElementById('c'),cx=cv.getContext('2d'),G=24,C=15,R=15;
+let sn,dr,nd,fd,sc,bs=+localStorage.getItem('snake_14')||0,lp,rn=false,ov=false;
+document.getElementById('bs').textContent=bs;
+function init(){sn=[{x:Math.floor(C/2),y:Math.floor(R/2)}];for(let i=1;i<3;i++)sn.push({x:sn[0].x-i,y:sn[0].y});
+dr={x:1,y:0};nd={x:1,y:0};sc=0;rn=false;ov=false;sf();upd();draw();}
+function sf(){do{fd={x:Math.floor(Math.random()*C),y:Math.floor(Math.random()*R)};}while(sn.some(s=>s.x===fd.x&&s.y===fd.y));}
+function upd(){document.getElementById('sc').textContent=sc;}
+function cd(dx,dy){if(dr.x===-dx&&dr.y===-dy)return;nd={x:dx,y:dy};}
+function draw(){cx.fillStyle='#0f0f1a';cx.fillRect(0,0,cv.width,cv.height);
+cx.shadowColor='#ef4444';cx.shadowBlur=10;cx.fillStyle='#ef4444';cx.beginPath();
+cx.arc(fd.x*G+G/2,fd.y*G+G/2,G/2-2,0,Math.PI*2);cx.fill();cx.shadowBlur=0;
+sn.forEach((s,i)=>{cx.fillStyle=i===0?'#a855f7':gba(124,58,237,);
+cx.beginPath();cx.roundRect(s.x*G+2,s.y*G+2,G-4,G-4,3);cx.fill();});
+if(ov){cx.fillStyle='rgba(0,0,0,.7)';cx.fillRect(0,0,cv.width,cv.height);cx.fillStyle='#f1f5f9';
+cx.font='bold 24px Outfit,sans-serif';cx.textAlign='center';cx.fillText('Game Over! Score: '+sc,cv.width/2,cv.height/2);}
+if(!rn&&!ov){cx.fillStyle='rgba(0,0,0,.5)';cx.fillRect(0,0,cv.width,cv.height);cx.fillStyle='#f1f5f9';
+cx.font='bold 20px Outfit,sans-serif';cx.textAlign='center';cx.fillText('Press Start',cv.width/2,cv.height/2);}}
+function tick(){dr=nd;let hd={x:sn[0].x+dr.x,y:sn[0].y+dr.y};
+if(hd.x<0||hd.x>=15||hd.y<0||hd.y>=15){end();return;}
+if(sn.some(s=>s.x===hd.x&&s.y===hd.y)){end();return;}
+sn.unshift(hd);if(hd.x===fd.x&&hd.y===fd.y){sc+=10;upd();sf();clearInterval(lp);lp=setInterval(tick,Math.max(50,90-sc));}
+else sn.pop();draw();}
+function end(){rn=false;ov=true;clearInterval(lp);if(sc>bs){bs=sc;localStorage.setItem('snake_14',bs);
+document.getElementById('bs').textContent=bs;}document.getElementById('sb').textContent='â–¶ Start';draw();}
+function start(){if(rn)return;if(ov)init();rn=true;document.getElementById('sb').textContent='Playing...';lp=setInterval(tick,90);}
+function reset(){clearInterval(lp);document.getElementById('sb').textContent='â–¶ Start';init();}
+document.onkeydown=e=>{const m={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0],w:[0,-1],s:[0,1],a:[-1,0],d:[1,0]};
+if(m[e.key]){e.preventDefault();cd(m[e.key][0],m[e.key][1]);if(!rn&&!ov)start();}};init();
+</script></main><div class="ad-banner" style="max-width:728px;margin:24px auto">Ad Space</div>
+<footer class="footer"><div class="footer-bottom">Â© 2026 WebFunHub</div></footer>
+<script>document.getElementById('mb').onclick=()=>document.getElementById('nl').classList.toggle('open');
+window.onscroll=()=>document.getElementById('nb').classList.toggle('scrolled',scrollY>20);</script></body></html>

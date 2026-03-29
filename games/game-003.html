@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Click Speed Test — WebFunHub</title>
+  <meta name="description" content="Test how fast you can click! Measure your CPS (clicks per second) with this free browser game.">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .cps-area {
+      width:100%; min-height:300px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      cursor:pointer; user-select:none; border-radius:var(--radius-md); margin:24px 0; transition:var(--transition);
+      background:linear-gradient(135deg,#1a1a2e,#2d1b69); border:2px solid var(--border-color); position:relative; overflow:hidden;
+    }
+    .cps-area:hover { border-color:var(--border-hover); }
+    .cps-area:active { transform:scale(0.98); }
+    .cps-big { font-family:'Outfit',sans-serif; font-size:4rem; font-weight:800; color:var(--accent-secondary); }
+    .cps-label { font-size:1rem; color:var(--text-secondary); margin-top:4px; }
+    .cps-timer { font-family:'Outfit',sans-serif; font-size:2rem; color:var(--accent-cyan); font-weight:700; }
+    .cps-results { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:16px; margin-top:24px; }
+    .cps-result-card {
+      background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--radius-md);
+      padding:20px; text-align:center;
+    }
+    .cps-result-val { font-family:'Outfit',sans-serif; font-size:2rem; font-weight:700; color:var(--accent-secondary); }
+    .cps-result-label { font-size:0.78rem; color:var(--text-muted); margin-top:4px; }
+    .cps-rank { margin-top:20px; padding:16px; background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--radius-md); text-align:center; }
+    .cps-rank-title { font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:700; }
+    .cps-duration-select { display:flex; gap:8px; justify-content:center; margin-bottom:16px; flex-wrap:wrap; }
+    .cps-dur-btn {
+      padding:8px 20px; border-radius:50px; border:1px solid var(--border-color); background:var(--bg-card);
+      color:var(--text-secondary); cursor:pointer; font-family:'Inter',sans-serif; font-size:0.85rem; font-weight:500; transition:var(--transition);
+    }
+    .cps-dur-btn.active { background:rgba(124,58,237,0.15); color:var(--accent-tertiary); border-color:var(--accent-primary); }
+    .click-ripple {
+      position:absolute; width:30px; height:30px; border-radius:50%; background:rgba(168,85,247,0.3);
+      animation:ripple 0.5s ease-out forwards; pointer-events:none;
+    }
+    @keyframes ripple { to { transform:scale(3); opacity:0; } }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <a href="../index.html" class="nav-brand"><div class="nav-brand-icon">W</div><span class="nav-brand-text">WebFunHub</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">Home</a></li><li><a href="../index.html#games" class="active">Games</a></li><li><a href="../index.html#tools">Tools</a></li>
+    </ul>
+    <button class="nav-menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+  </nav>
+
+  <div class="ad-banner" style="margin-top:80px;max-width:728px;">⬒ Ad Space — 728×90</div>
+
+  <main class="game-page">
+    <div class="game-page-header">
+      <a href="../index.html#games" class="game-page-back">← Back to Games</a>
+      <h1 class="game-page-title">🖱️ Click Speed Test</h1>
+      <div class="game-page-meta"><span class="game-page-tag">Reflex</span><span class="game-page-tag">Speed</span></div>
+    </div>
+
+    <div class="game-container" style="padding:24px;">
+      <div class="cps-duration-select">
+        <button class="cps-dur-btn" onclick="setDuration(5)">5s</button>
+        <button class="cps-dur-btn active" onclick="setDuration(10)">10s</button>
+        <button class="cps-dur-btn" onclick="setDuration(15)">15s</button>
+        <button class="cps-dur-btn" onclick="setDuration(30)">30s</button>
+      </div>
+
+      <div class="cps-area" id="clickArea" onclick="handleClick(event)">
+        <div class="cps-timer" id="timer">10s</div>
+        <div class="cps-big" id="clickCount">0</div>
+        <div class="cps-label" id="areaLabel">Click here to start!</div>
+      </div>
+
+      <div class="cps-results" id="results" style="display:none;">
+        <div class="cps-result-card">
+          <div class="cps-result-val" id="resCPS">0</div>
+          <div class="cps-result-label">Clicks/Second</div>
+        </div>
+        <div class="cps-result-card">
+          <div class="cps-result-val" id="resClicks">0</div>
+          <div class="cps-result-label">Total Clicks</div>
+        </div>
+        <div class="cps-result-card">
+          <div class="cps-result-val" id="resBest">0</div>
+          <div class="cps-result-label">Best CPS</div>
+        </div>
+      </div>
+      <div class="cps-rank" id="rankCard" style="display:none;">
+        <div class="cps-rank-title" id="rankText"></div>
+      </div>
+
+      <div class="game-controls" style="border:none;padding:16px 0 0;">
+        <button class="game-btn game-btn-primary" onclick="resetTest()">↻ Try Again</button>
+      </div>
+    </div>
+
+    <div class="game-instructions">
+      <h3>📖 How to Play</h3>
+      <ul>
+        <li>Select your test duration (5s, 10s, 15s, or 30s)</li>
+        <li>Click the purple area as fast as you can</li>
+        <li>The timer starts on your first click</li>
+        <li>See your CPS (clicks per second) score and ranking</li>
+      </ul>
+    </div>
+  </main>
+
+  <div class="ad-banner" style="max-width:728px;margin:24px auto;">⬒ Ad Space — 728×90</div>
+  <footer class="footer"><div class="footer-bottom">&copy; 2026 WebFunHub. All rights reserved.</div></footer>
+
+  <script>
+    document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));
+    window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20));
+
+    let clicks=0, duration=10, timeLeft=10, started=false, finished=false, timer=null, bestCPS=0;
+    bestCPS = parseFloat(localStorage.getItem('cps_best')||'0');
+
+    function setDuration(d) {
+      if(started && !finished) return;
+      duration = d; timeLeft = d;
+      document.querySelectorAll('.cps-dur-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelector(`.cps-dur-btn[onclick="setDuration(${d})"]`).classList.add('active');
+      resetTest();
+    }
+
+    function handleClick(e) {
+      if(finished) return;
+      if(!started) {
+        started = true;
+        document.getElementById('areaLabel').textContent = 'Keep clicking!';
+        timer = setInterval(()=>{
+          timeLeft--;
+          document.getElementById('timer').textContent = timeLeft+'s';
+          if(timeLeft<=0) endTest();
+        },1000);
+      }
+      clicks++;
+      document.getElementById('clickCount').textContent = clicks;
+
+      // Ripple effect
+      const rect = e.currentTarget.getBoundingClientRect();
+      const ripple = document.createElement('div');
+      ripple.className = 'click-ripple';
+      ripple.style.left = (e.clientX-rect.left-15)+'px';
+      ripple.style.top = (e.clientY-rect.top-15)+'px';
+      e.currentTarget.appendChild(ripple);
+      setTimeout(()=>ripple.remove(),500);
+    }
+
+    function endTest() {
+      clearInterval(timer);
+      finished = true;
+      const cps = (clicks/duration).toFixed(2);
+      document.getElementById('areaLabel').textContent = 'Test complete!';
+
+      if (parseFloat(cps) > bestCPS) {
+        bestCPS = parseFloat(cps);
+        localStorage.setItem('cps_best', bestCPS);
+      }
+
+      document.getElementById('results').style.display = 'grid';
+      document.getElementById('resCPS').textContent = cps;
+      document.getElementById('resClicks').textContent = clicks;
+      document.getElementById('resBest').textContent = bestCPS.toFixed(2);
+
+      const rankCard = document.getElementById('rankCard');
+      rankCard.style.display = 'block';
+      const c = parseFloat(cps);
+      let rank, color;
+      if(c>=12){rank='🏆 Inhuman!';color='#f59e0b';}
+      else if(c>=10){rank='🔥 Legendary';color='#ef4444';}
+      else if(c>=8){rank='⚡ Lightning Fast';color='#a855f7';}
+      else if(c>=6){rank='💪 Fast Clicker';color='#3b82f6';}
+      else if(c>=4){rank='👍 Above Average';color='#10b981';}
+      else if(c>=2){rank='🐢 Average';color='#94a3b8';}
+      else{rank='🐌 Slow Poke';color='#64748b';}
+      document.getElementById('rankText').textContent = rank;
+      document.getElementById('rankText').style.color = color;
+    }
+
+    function resetTest() {
+      clearInterval(timer);
+      clicks=0; timeLeft=duration; started=false; finished=false;
+      document.getElementById('clickCount').textContent = '0';
+      document.getElementById('timer').textContent = duration+'s';
+      document.getElementById('areaLabel').textContent = 'Click here to start!';
+      document.getElementById('results').style.display = 'none';
+      document.getElementById('rankCard').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Pong Marathon - WebFunHub</title><meta name="description" content="First to 15 wins">
+<link rel="stylesheet" href="../style.css"></head><body>
+<nav class="navbar" id="nb"><a href="../index.html" class="nav-brand"><div class="nav-brand-icon">W</div><span class="nav-brand-text">WebFunHub</span></a>
+<ul class="nav-links" id="nl"><li><a href="../index.html">Home</a></li><li><a href="../index.html#games" class="active">Games</a></li></ul>
+<button class="nav-menu-btn" id="mb" aria-label="Menu">â˜°</button></nav>
+<div class="ad-banner" style="margin-top:80px;max-width:728px">Ad Space</div>
+<main class="game-page"><div class="game-page-header"><a href="../index.html#games" class="game-page-back">â† Back</a>
+<h1 class="game-page-title">Pong Marathon</h1><div class="game-page-meta"><span class="game-page-tag">Arcade</span></div></div><div class="game-container"><div class="game-score-bar"><div class="game-score-item"><span class="game-score-label">You</span>
+<span class="game-score-value" id="p1">0</span></div><div class="game-score-item"><span class="game-score-label">AI</span>
+<span class="game-score-value" id="p2">0</span></div></div>
+<div class="game-canvas-wrap"><canvas id="c" width="500" height="350"></canvas></div>
+<div class="game-controls"><button class="game-btn game-btn-primary" id="sb" onclick="start()">â–¶ Start</button>
+<button class="game-btn game-btn-secondary" onclick="reset()">â†» Restart</button></div></div>
+<div class="game-instructions"><h3>ðŸ“– How to Play</h3><ul><li>Move mouse up/down to control paddle</li><li>First to 15 wins</li></ul></div>
+<script>
+const cv=document.getElementById('c'),cx=cv.getContext('2d'),W=cv.width,H=cv.height;
+const AS=3,BS=4,WS=15;
+let p1={y:H/2-30,h:60,s:0},p2={y:H/2-30,h:60,s:0},bl={x:W/2,y:H/2,dx:BS,dy:BS*(Math.random()-.5)*2,r:6};
+let running=false,anim;
+function draw(){cx.fillStyle='#0f0f1a';cx.fillRect(0,0,W,H);cx.setLineDash([5,5]);cx.strokeStyle='rgba(124,58,237,.2)';
+cx.beginPath();cx.moveTo(W/2,0);cx.lineTo(W/2,H);cx.stroke();cx.setLineDash([]);
+cx.fillStyle='#a855f7';cx.beginPath();cx.roundRect(10,p1.y,10,p1.h,4);cx.fill();
+cx.fillStyle='#3b82f6';cx.beginPath();cx.roundRect(W-20,p2.y,10,p2.h,4);cx.fill();
+cx.shadowColor='#f1f5f9';cx.shadowBlur=8;cx.fillStyle='#f1f5f9';cx.beginPath();cx.arc(bl.x,bl.y,bl.r,0,Math.PI*2);cx.fill();cx.shadowBlur=0;}
+function update(){bl.x+=bl.dx;bl.y+=bl.dy;if(bl.y<=bl.r||bl.y>=H-bl.r)bl.dy*=-1;
+let ai=p2.y+p2.h/2;if(ai<bl.y-10)p2.y+=AS;else if(ai>bl.y+10)p2.y-=AS;
+p2.y=Math.max(0,Math.min(H-p2.h,p2.y));
+if(bl.x<=20&&bl.y>=p1.y&&bl.y<=p1.y+p1.h){bl.dx=Math.abs(bl.dx);bl.dy+=(bl.y-(p1.y+p1.h/2))*.3;}
+else if(bl.x>=W-20&&bl.y>=p2.y&&bl.y<=p2.y+p2.h){bl.dx=-Math.abs(bl.dx);bl.dy+=(bl.y-(p2.y+p2.h/2))*.3;}
+if(bl.x<0){p2.s++;scored();}else if(bl.x>W){p1.s++;scored();}}
+function scored(){document.getElementById('p1').textContent=p1.s;document.getElementById('p2').textContent=p2.s;
+if(p1.s>=WS||p2.s>=WS){running=false;cancelAnimationFrame(anim);
+cx.fillStyle='rgba(0,0,0,.7)';cx.fillRect(0,0,W,H);cx.fillStyle='#f1f5f9';cx.font='bold 24px Outfit';cx.textAlign='center';
+cx.fillText(p1.s>=WS?'You Win!':'AI Wins!',W/2,H/2);return;}
+bl.x=W/2;bl.y=H/2;bl.dx=BS*(Math.random()>.5?1:-1);bl.dy=BS*(Math.random()-.5)*2;}
+function loop(){if(!running)return;update();draw();anim=requestAnimationFrame(loop);}
+function start(){if(running)return;if(p1.s>=WS||p2.s>=WS){p1.s=0;p2.s=0;document.getElementById('p1').textContent=0;document.getElementById('p2').textContent=0;}
+running=true;document.getElementById('sb').textContent='Playing...';loop();}
+function reset(){cancelAnimationFrame(anim);running=false;p1.s=0;p2.s=0;p1.y=H/2-30;p2.y=H/2-30;
+bl={x:W/2,y:H/2,dx:BS,dy:BS*(Math.random()-.5)*2,r:6};
+document.getElementById('p1').textContent=0;document.getElementById('p2').textContent=0;document.getElementById('sb').textContent='â–¶ Start';draw();}
+cv.onmousemove=e=>{let r=cv.getBoundingClientRect();p1.y=Math.max(0,Math.min(H-p1.h,(e.clientY-r.top)-p1.h/2));};
+cv.ontouchmove=e=>{e.preventDefault();let r=cv.getBoundingClientRect();p1.y=Math.max(0,Math.min(H-p1.h,(e.touches[0].clientY-r.top)-p1.h/2));};
+draw();
+</script></main><div class="ad-banner" style="max-width:728px;margin:24px auto">Ad Space</div>
+<footer class="footer"><div class="footer-bottom">Â© 2026 WebFunHub</div></footer>
+<script>document.getElementById('mb').onclick=()=>document.getElementById('nl').classList.toggle('open');
+window.onscroll=()=>document.getElementById('nb').classList.toggle('scrolled',scrollY>20);</script></body></html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reaction Time Test — WebFunHub</title>
+  <meta name="description" content="Test your reflexes! Click as fast as you can when the screen turns green. How fast are your reactions?">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .rt-area {
+      width:100%; min-height:350px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      cursor:pointer; user-select:none; border-radius:var(--radius-lg); transition:background 0.3s; position:relative;
+    }
+    .rt-waiting { background:linear-gradient(135deg,#1e3a5f,#1a1a2e); border:2px solid var(--accent-blue); }
+    .rt-ready { background:linear-gradient(135deg,#5c1a1a,#2e1a1a); border:2px solid #ef4444; }
+    .rt-go { background:linear-gradient(135deg,#1a4a2a,#1a2e1a); border:2px solid var(--accent-green); }
+    .rt-result { background:linear-gradient(135deg,#2d1b69,#1a1a2e); border:2px solid var(--accent-primary); }
+    .rt-toofast { background:linear-gradient(135deg,#4a2e1a,#2e1a1a); border:2px solid var(--accent-orange); }
+    .rt-big { font-family:'Outfit',sans-serif; font-size:3.5rem; font-weight:800; margin-bottom:8px; }
+    .rt-sub { font-size:1.1rem; color:var(--text-secondary); }
+    .rt-icon { font-size:4rem; margin-bottom:16px; }
+    .rt-history { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:20px; }
+    .rt-chip {
+      padding:6px 14px; border-radius:50px; font-size:0.82rem; font-weight:600;
+      background:var(--bg-secondary); border:1px solid var(--border-color); color:var(--text-secondary);
+    }
+    .rt-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:20px; }
+    .rt-stat-card {
+      background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--radius-md);
+      padding:16px; text-align:center;
+    }
+    .rt-stat-val { font-family:'Outfit',sans-serif; font-size:1.6rem; font-weight:700; color:var(--accent-secondary); }
+    .rt-stat-lbl { font-size:0.75rem; color:var(--text-muted); margin-top:4px; }
+  </style>
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <a href="../index.html" class="nav-brand"><div class="nav-brand-icon">W</div><span class="nav-brand-text">WebFunHub</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">Home</a></li><li><a href="../index.html#games" class="active">Games</a></li><li><a href="../index.html#tools">Tools</a></li>
+    </ul>
+    <button class="nav-menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+  </nav>
+
+  <div class="ad-banner" style="margin-top:80px;max-width:728px;">⬒ Ad Space — 728×90</div>
+
+  <main class="game-page">
+    <div class="game-page-header">
+      <a href="../index.html#games" class="game-page-back">← Back to Games</a>
+      <h1 class="game-page-title">⚡ Reaction Time Test</h1>
+      <div class="game-page-meta"><span class="game-page-tag">Reflex</span><span class="game-page-tag">Speed</span></div>
+    </div>
+
+    <div class="game-container" style="padding:24px;">
+      <div class="rt-area rt-waiting" id="rtArea" onclick="handleClick()">
+        <div class="rt-icon" id="rtIcon">🎯</div>
+        <div class="rt-big" id="rtBig">Ready?</div>
+        <div class="rt-sub" id="rtSub">Click anywhere to begin</div>
+      </div>
+
+      <div class="rt-history" id="history"></div>
+
+      <div class="rt-stats" id="stats" style="display:none;">
+        <div class="rt-stat-card">
+          <div class="rt-stat-val" id="statAvg">—</div>
+          <div class="rt-stat-lbl">Average</div>
+        </div>
+        <div class="rt-stat-card">
+          <div class="rt-stat-val" id="statBest">—</div>
+          <div class="rt-stat-lbl">Best</div>
+        </div>
+        <div class="rt-stat-card">
+          <div class="rt-stat-val" id="statTries">0</div>
+          <div class="rt-stat-lbl">Attempts</div>
+        </div>
+      </div>
+
+      <div class="game-controls" style="border:none;padding:16px 0 0;">
+        <button class="game-btn game-btn-secondary" onclick="resetAll()">Reset All</button>
+      </div>
+    </div>
+
+    <div class="game-instructions">
+      <h3>📖 How to Play</h3>
+      <ul>
+        <li>Click the area to start the test</li>
+        <li>Wait for the screen to turn <strong style="color:#10b981">GREEN</strong></li>
+        <li>Click as fast as you can when it turns green!</li>
+        <li>Don't click too early — if you click on red, you'll have to restart</li>
+        <li>Average reaction time is 200-250ms. Can you beat that?</li>
+      </ul>
+    </div>
+  </main>
+
+  <div class="ad-banner" style="max-width:728px;margin:24px auto;">⬒ Ad Space — 728×90</div>
+  <footer class="footer"><div class="footer-bottom">&copy; 2026 WebFunHub. All rights reserved.</div></footer>
+
+  <script>
+    document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));
+    window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20));
+
+    let state='waiting', greenTime=0, timeout=null, results=[];
+
+    function handleClick() {
+      const area = document.getElementById('rtArea');
+      const icon = document.getElementById('rtIcon');
+      const big = document.getElementById('rtBig');
+      const sub = document.getElementById('rtSub');
+
+      if (state === 'waiting') {
+        state = 'ready';
+        area.className = 'rt-area rt-ready';
+        icon.textContent = '🔴';
+        big.textContent = 'Wait...';
+        sub.textContent = 'Wait for green...';
+        const delay = 1500 + Math.random() * 3500;
+        timeout = setTimeout(()=>{
+          state = 'go';
+          greenTime = performance.now();
+          area.className = 'rt-area rt-go';
+          icon.textContent = '🟢';
+          big.textContent = 'CLICK!';
+          big.style.color = '#10b981';
+          sub.textContent = 'Click now!';
+        }, delay);
+      } else if (state === 'ready') {
+        clearTimeout(timeout);
+        state = 'waiting';
+        area.className = 'rt-area rt-toofast';
+        icon.textContent = '⚠️';
+        big.textContent = 'Too Fast!';
+        big.style.color = '#f59e0b';
+        sub.textContent = 'You clicked before green. Click to try again.';
+        setTimeout(()=>{
+          area.className = 'rt-area rt-waiting';
+          icon.textContent = '🎯';
+          big.textContent = 'Ready?';
+          big.style.color = '';
+          sub.textContent = 'Click anywhere to begin';
+        }, 1500);
+      } else if (state === 'go') {
+        const reactionTime = Math.round(performance.now() - greenTime);
+        state = 'waiting';
+        results.push(reactionTime);
+        area.className = 'rt-area rt-result';
+        icon.textContent = '⚡';
+        big.textContent = reactionTime + 'ms';
+        big.style.color = reactionTime < 200 ? '#10b981' : reactionTime < 300 ? '#f59e0b' : '#ef4444';
+        sub.textContent = getRating(reactionTime) + ' — Click to try again';
+        updateStats();
+      }
+    }
+
+    function getRating(ms) {
+      if(ms < 150) return '🏆 Inhuman!';
+      if(ms < 200) return '⚡ Lightning Fast!';
+      if(ms < 250) return '🔥 Excellent!';
+      if(ms < 300) return '👍 Great!';
+      if(ms < 400) return '👌 Average';
+      return '🐢 Keep Practicing';
+    }
+
+    function updateStats() {
+      document.getElementById('stats').style.display = 'grid';
+      const avg = Math.round(results.reduce((a,b)=>a+b,0)/results.length);
+      const best = Math.min(...results);
+      document.getElementById('statAvg').textContent = avg + 'ms';
+      document.getElementById('statBest').textContent = best + 'ms';
+      document.getElementById('statTries').textContent = results.length;
+
+      const histEl = document.getElementById('history');
+      histEl.innerHTML = results.slice(-10).map(r => `<span class="rt-chip">${r}ms</span>`).join('');
+    }
+
+    function resetAll() {
+      results = [];
+      state = 'waiting';
+      clearTimeout(timeout);
+      document.getElementById('rtArea').className = 'rt-area rt-waiting';
+      document.getElementById('rtIcon').textContent = '🎯';
+      document.getElementById('rtBig').textContent = 'Ready?';
+      document.getElementById('rtBig').style.color = '';
+      document.getElementById('rtSub').textContent = 'Click anywhere to begin';
+      document.getElementById('stats').style.display = 'none';
+      document.getElementById('history').innerHTML = '';
+    }
+  </script>
+</body>
+</html>
