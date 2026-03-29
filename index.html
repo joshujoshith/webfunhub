@@ -1,0 +1,4472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebFunHub — 1000+ Free Browser Games & Tools</title>
+  <meta name="description" content="Play 1000+ free browser games instantly. No downloads, no installs. Snake, puzzles, arcade, reaction tests, memory games, and more. Plus free online tools.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-brand">
+      <div class="nav-brand-icon">W</div>
+      <span class="nav-brand-text">WebFunHub</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#games">Games</a></li>
+    </ul>
+    <button class="nav-menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+  </nav>
+
+  <!-- AD BANNER TOP -->
+  <div style="padding-top:80px;max-width:1300px;margin:0 auto;">
+    <div class="ad-banner">⬒ Ad Space — 728×90 Banner</div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-particles" id="particles"></div>
+    <div class="hero-badge"><span class="pulse"></span> 1000+ Games Available</div>
+    <h1>Play Instantly.<br><span class="gradient-text">No Downloads.</span></h1>
+    <p class="hero-subtitle">The ultimate collection of free browser games and tools. Jump in and start playing — no installs, no signups, pure fun.</p>
+    <div class="hero-actions">
+      <a href="#games" class="btn btn-primary">🎮 Browse Games</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-number" id="gameCount">535</div>
+        <div class="hero-stat-label">Games</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-number">100%</div>
+        <div class="hero-stat-label">Free</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAMES SECTION -->
+  <section class="section" id="games">
+    <div class="section-header">
+      <div class="section-tag">🎮 Games Library</div>
+      <h2 class="section-title">Pick a Game, Start Playing</h2>
+      <p class="section-subtitle">Every game runs instantly in your browser. No loading, no installs.</p>
+    </div>
+
+    <div class="search-container">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" id="searchGames" placeholder="Search games...">
+    </div>
+
+    <div class="filter-tags" id="filterTags">
+      <span class="filter-tag active" data-filter="all">All</span>
+      <span class="filter-tag" data-filter="arcade">Arcade</span>
+      <span class="filter-tag" data-filter="puzzle">Puzzle</span>
+      <span class="filter-tag" data-filter="reflex">Reflex</span>
+      <span class="filter-tag" data-filter="memory">Memory</span>
+      <span class="filter-tag" data-filter="strategy">Strategy</span>
+      <span class="filter-tag" data-filter="racing">Racing</span>
+      <span class="filter-tag" data-filter="battle">Battle</span>
+    </div>
+
+    <div class="games-grid" id="gamesGrid"></div>
+  </section>
+
+  <!-- AD BANNER MID -->
+  <div style="max-width:1300px;margin:0 auto;padding:0 2rem;">
+    <div class="ad-banner">⬒ Ad Space — 728×90 Banner</div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-brand-name">WebFunHub</div>
+        <p>The ultimate collection of free browser games and tools. Play instantly, no downloads required.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Games</h4>
+        <a href="#games">All Games</a>
+        <a href="#games">Arcade</a>
+        <a href="#games">Puzzle</a>
+        <a href="#games">Reflex</a>
+        <a href="#games">Racing</a>
+        <a href="#games">Battle</a>
+      </div>
+
+      <div class="footer-links">
+        <h4>About</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 WebFunHub. All rights reserved. Built for fun.
+    </div>
+  </footer>
+
+  <!-- AD BANNER BOTTOM -->
+  <div style="max-width:1300px;margin:0 auto;padding:0 2rem 2rem;">
+    <div class="ad-banner">⬒ Ad Space — 728×90 Banner</div>
+  </div>
+
+  <script>
+    // ===== DATA =====
+    const games = [
+  {
+    "id": "001",
+    "title": "Snake Classic",
+    "desc": "Guide the snake, eat food, grow longer. Don't hit the walls!",
+    "category": "arcade",
+    "icon": "🐍",
+    "gradient": "green"
+  },
+  {
+    "id": "002",
+    "title": "Tic Tac Toe",
+    "desc": "Classic X and O game. Play against a smart AI opponent.",
+    "category": "strategy",
+    "icon": "❌",
+    "gradient": "blue"
+  },
+  {
+    "id": "003",
+    "title": "Click Speed Test",
+    "desc": "How fast can you click? Test your clicking speed in 10 seconds.",
+    "category": "reflex",
+    "icon": "🖱️",
+    "gradient": "purple"
+  },
+  {
+    "id": "004",
+    "title": "Memory Cards",
+    "desc": "Flip cards and match pairs. Train your memory and beat the clock.",
+    "category": "memory",
+    "icon": "🃏",
+    "gradient": "pink"
+  },
+  {
+    "id": "005",
+    "title": "Reaction Time",
+    "desc": "Test your reflexes. Click as fast as you can when the screen turns green.",
+    "category": "reflex",
+    "icon": "⚡",
+    "gradient": "orange"
+  },
+  {
+    "id": "006",
+    "gradient": "green",
+    "icon": "ðŸ",
+    "desc": "Fast-paced snake action",
+    "title": "Snake Speed Run",
+    "category": "arcade"
+  },
+  {
+    "id": "007",
+    "gradient": "green",
+    "icon": "ðŸ",
+    "desc": "Snake without boundaries - wrap around!",
+    "title": "Snake No Walls",
+    "category": "arcade"
+  },
+  {
+    "id": "008",
+    "gradient": "green",
+    "icon": "ðŸ",
+    "desc": "Snake on a small 10x10 grid",
+    "title": "Tiny Snake",
+    "category": "arcade"
+  },
+  {
+    "id": "009",
+    "gradient": "green",
+    "icon": "ðŸ",
+    "desc": "Snake on a massive grid",
+    "title": "Giant Snake",
+    "category": "arcade"
+  },
+  {
+    "id": "010",
+    "gradient": "green",
+    "icon": "ðŸ",
+    "desc": "Insanely fast snake challenge",
+    "title": "Turbo Snake",
+    "category": "arcade"
+  },
+  {
+    "id": "011",
+    "gradient": "green",
+    "icon": "ðŸ",
+    "desc": "Slow and steady - huge grid, no walls",
+    "title": "Snake Marathon",
+    "category": "arcade"
+  },
+  {
+    "id": "012",
+    "gradient": "green",
+    "icon": "ðŸ",
+    "desc": "Tiny grid, blazing speed",
+    "title": "Snake Sprint",
+    "category": "arcade"
+  },
+  {
+    "id": "013",
+    "gradient": "green",
+    "icon": "ðŸ",
+    "desc": "Relaxed snake, no walls, slow pace",
+    "title": "Snake Zen",
+    "category": "arcade"
+  },
+  {
+    "id": "014",
+    "gradient": "green",
+    "icon": "ðŸ",
+    "desc": "Medium grid, fast speed, walls on",
+    "title": "Snake Challenge",
+    "category": "arcade"
+  },
+  {
+    "id": "015",
+    "gradient": "green",
+    "icon": "ðŸ",
+    "desc": "Tiny grid, maximum speed",
+    "title": "Snake Extreme",
+    "category": "arcade"
+  },
+  {
+    "id": "016",
+    "gradient": "blue",
+    "icon": "🧱",
+    "desc": "Classic brick breaking game",
+    "title": "Brick Breaker",
+    "category": "arcade"
+  },
+  {
+    "id": "017",
+    "gradient": "blue",
+    "icon": "🧱",
+    "desc": "More bricks, faster ball",
+    "title": "Brick Breaker Pro",
+    "category": "arcade"
+  },
+  {
+    "id": "018",
+    "gradient": "blue",
+    "icon": "🧱",
+    "desc": "6 rows of bricks to smash",
+    "title": "Brick Wall",
+    "category": "arcade"
+  },
+  {
+    "id": "019",
+    "gradient": "blue",
+    "icon": "🧱",
+    "desc": "Fast ball, small paddle",
+    "title": "Speed Breaker",
+    "category": "arcade"
+  },
+  {
+    "id": "020",
+    "gradient": "blue",
+    "icon": "🧱",
+    "desc": "Massive brick wall challenge",
+    "title": "Mega Breaker",
+    "category": "arcade"
+  },
+  {
+    "id": "021",
+    "gradient": "blue",
+    "icon": "🧱",
+    "desc": "Easy mode - big paddle, slow ball",
+    "title": "Breaker Easy",
+    "category": "arcade"
+  },
+  {
+    "id": "022",
+    "gradient": "blue",
+    "icon": "🧱",
+    "desc": "Tiny paddle, fast ball",
+    "title": "Breaker Nightmare",
+    "category": "arcade"
+  },
+  {
+    "id": "023",
+    "gradient": "blue",
+    "icon": "🧱",
+    "desc": "4 rows, fast ball challenge",
+    "title": "Brick Sprint",
+    "category": "arcade"
+  },
+  {
+    "id": "024",
+    "gradient": "blue",
+    "icon": "🧱",
+    "desc": "8 rows fortress",
+    "title": "Brick Fortress",
+    "category": "arcade"
+  },
+  {
+    "id": "025",
+    "gradient": "blue",
+    "icon": "🧱",
+    "desc": "Speed run brick breaking",
+    "title": "Breaker Blitz",
+    "category": "arcade"
+  },
+  {
+    "id": "026",
+    "gradient": "cyan",
+    "icon": "ðŸ“",
+    "desc": "Classic Pong against AI",
+    "title": "Pong Classic",
+    "category": "arcade"
+  },
+  {
+    "id": "027",
+    "gradient": "cyan",
+    "icon": "ðŸ“",
+    "desc": "Fast AI opponent",
+    "title": "Pong Hard",
+    "category": "arcade"
+  },
+  {
+    "id": "028",
+    "gradient": "cyan",
+    "icon": "ðŸ“",
+    "desc": "Lightning fast Pong",
+    "title": "Pong Extreme",
+    "category": "arcade"
+  },
+  {
+    "id": "029",
+    "gradient": "cyan",
+    "icon": "ðŸ“",
+    "desc": "Slow AI, easy win",
+    "title": "Pong Easy",
+    "category": "arcade"
+  },
+  {
+    "id": "030",
+    "gradient": "cyan",
+    "icon": "ðŸ“",
+    "desc": "First to 15 wins",
+    "title": "Pong Marathon",
+    "category": "arcade"
+  },
+  {
+    "id": "031",
+    "gradient": "cyan",
+    "icon": "ðŸ“",
+    "desc": "Super fast ball",
+    "title": "Speed Pong",
+    "category": "arcade"
+  },
+  {
+    "id": "031",
+    "title": "Extreme Jumper 31",
+    "desc": "Play Extreme Jumper 31 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "arcade",
+    "icon": "⚔️",
+    "gradient": "blue"
+  },
+  {
+    "id": "032",
+    "gradient": "cyan",
+    "icon": "ðŸ“",
+    "desc": "Pro-level AI, first to 10",
+    "title": "Pong Championship",
+    "category": "arcade"
+  },
+  {
+    "id": "032",
+    "title": "Extreme Racer 32",
+    "desc": "Play Extreme Racer 32 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "puzzle",
+    "icon": "🎸",
+    "gradient": "cyan"
+  },
+  {
+    "id": "033",
+    "gradient": "cyan",
+    "icon": "ðŸ“",
+    "desc": "First to 3, fast ball",
+    "title": "Pong Quick Match",
+    "category": "arcade"
+  },
+  {
+    "id": "033",
+    "title": "Extreme Ninja 33",
+    "desc": "Play Extreme Ninja 33 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "arcade",
+    "icon": "💧",
+    "gradient": "blue"
+  },
+  {
+    "id": "034",
+    "gradient": "cyan",
+    "icon": "ðŸ“",
+    "desc": "Can you beat perfect AI?",
+    "title": "Pong Impossible",
+    "category": "arcade"
+  },
+  {
+    "id": "034",
+    "title": "Mega Smasher 34",
+    "desc": "Play Mega Smasher 34 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "puzzle",
+    "icon": "♟️",
+    "gradient": "pink"
+  },
+  {
+    "id": "035",
+    "gradient": "cyan",
+    "icon": "ðŸ“",
+    "desc": "Turbo speed challenge",
+    "title": "Pong Turbo",
+    "category": "arcade"
+  },
+  {
+    "id": "035",
+    "title": "Light Clicker 35",
+    "desc": "Play Light Clicker 35 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "memory",
+    "icon": "✨",
+    "gradient": "green"
+  },
+  {
+    "id": "036",
+    "title": "Fast Clicker 36",
+    "desc": "Play Fast Clicker 36 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "reflex",
+    "icon": "🧠",
+    "gradient": "cyan"
+  },
+  {
+    "id": "037",
+    "title": "Furious Dragon 37",
+    "desc": "Play Furious Dragon 37 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "strategy",
+    "icon": "🎯",
+    "gradient": "purple"
+  },
+  {
+    "id": "038",
+    "title": "Mad Builder 38",
+    "desc": "Play Mad Builder 38 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "reflex",
+    "icon": "🔥",
+    "gradient": "orange"
+  },
+  {
+    "id": "039",
+    "title": "Light Box 39",
+    "desc": "Play Light Box 39 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "strategy",
+    "icon": "🧠",
+    "gradient": "blue"
+  },
+  {
+    "id": "040",
+    "title": "Extreme Clicker 40",
+    "desc": "Play Extreme Clicker 40 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "reflex",
+    "icon": "⚽",
+    "gradient": "blue"
+  },
+  {
+    "id": "041",
+    "title": "Giga Fighter 41",
+    "desc": "Play Giga Fighter 41 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "strategy",
+    "icon": "🚗",
+    "gradient": "cyan"
+  },
+  {
+    "id": "042",
+    "title": "Galactic Hero 42",
+    "desc": "Play Galactic Hero 42 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "arcade",
+    "icon": "🔥",
+    "gradient": "cyan"
+  },
+  {
+    "id": "043",
+    "title": "Hyper Dragon 43",
+    "desc": "Play Hyper Dragon 43 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "memory",
+    "icon": "🕹️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "044",
+    "title": "Galactic Shooter 44",
+    "desc": "Play Galactic Shooter 44 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "memory",
+    "icon": "🧩",
+    "gradient": "blue"
+  },
+  {
+    "id": "045",
+    "title": "Extreme Jumper 45",
+    "desc": "Play Extreme Jumper 45 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "memory",
+    "icon": "🔥",
+    "gradient": "orange"
+  },
+  {
+    "id": "046",
+    "title": "Quantum Wizard 46",
+    "desc": "Play Quantum Wizard 46 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "arcade",
+    "icon": "⚔️",
+    "gradient": "green"
+  },
+  {
+    "id": "047",
+    "title": "Dark Dodger 47",
+    "desc": "Play Dark Dodger 47 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "reflex",
+    "icon": "🚀",
+    "gradient": "orange"
+  },
+  {
+    "id": "048",
+    "title": "Epic Smasher 48",
+    "desc": "Play Epic Smasher 48 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "arcade",
+    "icon": "🐸",
+    "gradient": "pink"
+  },
+  {
+    "id": "049",
+    "title": "Dark Racer 49",
+    "desc": "Play Dark Racer 49 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "arcade",
+    "icon": "🎯",
+    "gradient": "cyan"
+  },
+  {
+    "id": "050",
+    "title": "Cosmic Knight 50",
+    "desc": "Play Cosmic Knight 50 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "strategy",
+    "icon": "🏃",
+    "gradient": "purple"
+  },
+  {
+    "id": "051",
+    "title": "Turbo Shooter 51",
+    "desc": "Play Turbo Shooter 51 instantly in your browser! Simple, fast, and fun turbo action.",
+    "category": "strategy",
+    "icon": "⚽",
+    "gradient": "pink"
+  },
+  {
+    "id": "052",
+    "title": "Ultra Clicker 52",
+    "desc": "Play Ultra Clicker 52 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "memory",
+    "icon": "👽",
+    "gradient": "blue"
+  },
+  {
+    "id": "053",
+    "title": "Furious Dragon 53",
+    "desc": "Play Furious Dragon 53 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "arcade",
+    "icon": "🧩",
+    "gradient": "orange"
+  },
+  {
+    "id": "054",
+    "title": "Shadow Wizard 54",
+    "desc": "Play Shadow Wizard 54 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "strategy",
+    "icon": "🚗",
+    "gradient": "pink"
+  },
+  {
+    "id": "055",
+    "title": "Super Cube 55",
+    "desc": "Play Super Cube 55 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "reflex",
+    "icon": "🔥",
+    "gradient": "blue"
+  },
+  {
+    "id": "056",
+    "title": "Epic Jumper 56",
+    "desc": "Play Epic Jumper 56 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "reflex",
+    "icon": "🐸",
+    "gradient": "orange"
+  },
+  {
+    "id": "057",
+    "title": "Crazy Wizard 57",
+    "desc": "Play Crazy Wizard 57 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "arcade",
+    "icon": "🕹️",
+    "gradient": "green"
+  },
+  {
+    "id": "058",
+    "title": "Retro Builder 58",
+    "desc": "Play Retro Builder 58 instantly in your browser! Simple, fast, and fun retro action.",
+    "category": "strategy",
+    "icon": "🧠",
+    "gradient": "pink"
+  },
+  {
+    "id": "059",
+    "title": "Giga Smasher 59",
+    "desc": "Play Giga Smasher 59 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "memory",
+    "icon": "💎",
+    "gradient": "cyan"
+  },
+  {
+    "id": "060",
+    "title": "Dark Knight 60",
+    "desc": "Play Dark Knight 60 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "puzzle",
+    "icon": "🕹️",
+    "gradient": "pink"
+  },
+  {
+    "id": "061",
+    "title": "Fast Alien 61",
+    "desc": "Play Fast Alien 61 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "puzzle",
+    "icon": "🕹️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "062",
+    "title": "Hyper Monster 62",
+    "desc": "Play Hyper Monster 62 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "strategy",
+    "icon": "🏃",
+    "gradient": "purple"
+  },
+  {
+    "id": "063",
+    "title": "Light Fighter 63",
+    "desc": "Play Light Fighter 63 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "reflex",
+    "icon": "🧠",
+    "gradient": "green"
+  },
+  {
+    "id": "064",
+    "title": "Epic Racer 64",
+    "desc": "Play Epic Racer 64 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "memory",
+    "icon": "🔥",
+    "gradient": "pink"
+  },
+  {
+    "id": "065",
+    "title": "Hyper Clicker 65",
+    "desc": "Play Hyper Clicker 65 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "arcade",
+    "icon": "✨",
+    "gradient": "orange"
+  },
+  {
+    "id": "066",
+    "title": "Shadow Dragon 66",
+    "desc": "Play Shadow Dragon 66 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "puzzle",
+    "icon": "🕹️",
+    "gradient": "orange"
+  },
+  {
+    "id": "067",
+    "title": "Epic Fighter 67",
+    "desc": "Play Epic Fighter 67 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "memory",
+    "icon": "🏃",
+    "gradient": "blue"
+  },
+  {
+    "id": "068",
+    "title": "Neon Clicker 68",
+    "desc": "Play Neon Clicker 68 instantly in your browser! Simple, fast, and fun neon action.",
+    "category": "memory",
+    "icon": "🚗",
+    "gradient": "pink"
+  },
+  {
+    "id": "069",
+    "title": "Shadow Fighter 69",
+    "desc": "Play Shadow Fighter 69 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "strategy",
+    "icon": "🧠",
+    "gradient": "purple"
+  },
+  {
+    "id": "070",
+    "title": "Extreme Matcher 70",
+    "desc": "Play Extreme Matcher 70 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "arcade",
+    "icon": "✨",
+    "gradient": "orange"
+  },
+  {
+    "id": "071",
+    "title": "Fast Dodger 71",
+    "desc": "Play Fast Dodger 71 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "memory",
+    "icon": "🔥",
+    "gradient": "orange"
+  },
+  {
+    "id": "072",
+    "title": "Hyper Ninja 72",
+    "desc": "Play Hyper Ninja 72 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "puzzle",
+    "icon": "🚗",
+    "gradient": "pink"
+  },
+  {
+    "id": "073",
+    "title": "Magic Racer 73",
+    "desc": "Play Magic Racer 73 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "memory",
+    "icon": "♟️",
+    "gradient": "pink"
+  },
+  {
+    "id": "074",
+    "title": "Hyper Clicker 74",
+    "desc": "Play Hyper Clicker 74 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "strategy",
+    "icon": "♟️",
+    "gradient": "green"
+  },
+  {
+    "id": "075",
+    "title": "Legendary Alien 75",
+    "desc": "Play Legendary Alien 75 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "strategy",
+    "icon": "🔥",
+    "gradient": "blue"
+  },
+  {
+    "id": "076",
+    "title": "Hyper Racer 76",
+    "desc": "Play Hyper Racer 76 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "reflex",
+    "icon": "🧠",
+    "gradient": "pink"
+  },
+  {
+    "id": "077",
+    "title": "Giga Box 77",
+    "desc": "Play Giga Box 77 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "reflex",
+    "icon": "🔥",
+    "gradient": "purple"
+  },
+  {
+    "id": "078",
+    "title": "Shadow Fighter 78",
+    "desc": "Play Shadow Fighter 78 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "puzzle",
+    "icon": "♟️",
+    "gradient": "green"
+  },
+  {
+    "id": "079",
+    "title": "Retro Dragon 79",
+    "desc": "Play Retro Dragon 79 instantly in your browser! Simple, fast, and fun retro action.",
+    "category": "memory",
+    "icon": "🧩",
+    "gradient": "pink"
+  },
+  {
+    "id": "080",
+    "title": "Turbo Monster 80",
+    "desc": "Play Turbo Monster 80 instantly in your browser! Simple, fast, and fun turbo action.",
+    "category": "strategy",
+    "icon": "🔥",
+    "gradient": "orange"
+  },
+  {
+    "id": "081",
+    "title": "Super Dodger 81",
+    "desc": "Play Super Dodger 81 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "arcade",
+    "icon": "💎",
+    "gradient": "orange"
+  },
+  {
+    "id": "082",
+    "title": "Pixel Monster 82",
+    "desc": "Play Pixel Monster 82 instantly in your browser! Simple, fast, and fun pixel action.",
+    "category": "strategy",
+    "icon": "🎸",
+    "gradient": "purple"
+  },
+  {
+    "id": "083",
+    "title": "Retro Robot 83",
+    "desc": "Play Retro Robot 83 instantly in your browser! Simple, fast, and fun retro action.",
+    "category": "reflex",
+    "icon": "💧",
+    "gradient": "cyan"
+  },
+  {
+    "id": "084",
+    "title": "Magic Runner 84",
+    "desc": "Play Magic Runner 84 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "reflex",
+    "icon": "🐸",
+    "gradient": "cyan"
+  },
+  {
+    "id": "085",
+    "title": "Giga Monster 85",
+    "desc": "Play Giga Monster 85 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "arcade",
+    "icon": "🔥",
+    "gradient": "orange"
+  },
+  {
+    "id": "086",
+    "title": "Furious Builder 86",
+    "desc": "Play Furious Builder 86 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "strategy",
+    "icon": "💧",
+    "gradient": "blue"
+  },
+  {
+    "id": "087",
+    "title": "Turbo Smasher 87",
+    "desc": "Play Turbo Smasher 87 instantly in your browser! Simple, fast, and fun turbo action.",
+    "category": "puzzle",
+    "icon": "🚗",
+    "gradient": "pink"
+  },
+  {
+    "id": "088",
+    "title": "Quantum Zombie 88",
+    "desc": "Play Quantum Zombie 88 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "puzzle",
+    "icon": "🚗",
+    "gradient": "purple"
+  },
+  {
+    "id": "089",
+    "title": "Mad Zombie 89",
+    "desc": "Play Mad Zombie 89 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "reflex",
+    "icon": "🎲",
+    "gradient": "orange"
+  },
+  {
+    "id": "090",
+    "title": "Legendary Runner 90",
+    "desc": "Play Legendary Runner 90 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "arcade",
+    "icon": "🎲",
+    "gradient": "cyan"
+  },
+  {
+    "id": "091",
+    "title": "Epic Cube 91",
+    "desc": "Play Epic Cube 91 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "reflex",
+    "icon": "⚔️",
+    "gradient": "green"
+  },
+  {
+    "id": "092",
+    "title": "Cosmic Monster 92",
+    "desc": "Play Cosmic Monster 92 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "strategy",
+    "icon": "💎",
+    "gradient": "green"
+  },
+  {
+    "id": "093",
+    "title": "Hyper Cube 93",
+    "desc": "Play Hyper Cube 93 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "memory",
+    "icon": "♟️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "094",
+    "title": "Legendary Alien 94",
+    "desc": "Play Legendary Alien 94 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "strategy",
+    "icon": "⚡",
+    "gradient": "orange"
+  },
+  {
+    "id": "095",
+    "title": "Quantum Fighter 95",
+    "desc": "Play Quantum Fighter 95 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "reflex",
+    "icon": "🎸",
+    "gradient": "pink"
+  },
+  {
+    "id": "096",
+    "title": "Epic Fighter 96",
+    "desc": "Play Epic Fighter 96 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "reflex",
+    "icon": "🎈",
+    "gradient": "orange"
+  },
+  {
+    "id": "097",
+    "title": "Magic Knight 97",
+    "desc": "Play Magic Knight 97 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "puzzle",
+    "icon": "💧",
+    "gradient": "orange"
+  },
+  {
+    "id": "098",
+    "title": "Super Breaker 98",
+    "desc": "Play Super Breaker 98 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "strategy",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "099",
+    "title": "Light Smasher 99",
+    "desc": "Play Light Smasher 99 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "arcade",
+    "icon": "🏃",
+    "gradient": "blue"
+  },
+  {
+    "id": "100",
+    "title": "Ultra Jumper 100",
+    "desc": "Play Ultra Jumper 100 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "puzzle",
+    "icon": "♟️",
+    "gradient": "green"
+  },
+  {
+    "id": "101",
+    "title": "Ultra Shooter 101",
+    "desc": "Play Ultra Shooter 101 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "reflex",
+    "icon": "💎",
+    "gradient": "green"
+  },
+  {
+    "id": "102",
+    "title": "Legendary Robot 102",
+    "desc": "Play Legendary Robot 102 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "memory",
+    "icon": "🧠",
+    "gradient": "cyan"
+  },
+  {
+    "id": "103",
+    "title": "Quantum Knight 103",
+    "desc": "Play Quantum Knight 103 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "arcade",
+    "icon": "💧",
+    "gradient": "pink"
+  },
+  {
+    "id": "104",
+    "title": "Phantom Dodger 104",
+    "desc": "Play Phantom Dodger 104 instantly in your browser! Simple, fast, and fun phantom action.",
+    "category": "puzzle",
+    "icon": "🧩",
+    "gradient": "orange"
+  },
+  {
+    "id": "105",
+    "title": "Magic Clicker 105",
+    "desc": "Play Magic Clicker 105 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "memory",
+    "icon": "🎯",
+    "gradient": "green"
+  },
+  {
+    "id": "106",
+    "title": "Epic Alien 106",
+    "desc": "Play Epic Alien 106 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "puzzle",
+    "icon": "🎯",
+    "gradient": "purple"
+  },
+  {
+    "id": "107",
+    "title": "Pixel Dodger 107",
+    "desc": "Play Pixel Dodger 107 instantly in your browser! Simple, fast, and fun pixel action.",
+    "category": "strategy",
+    "icon": "🕹️",
+    "gradient": "purple"
+  },
+  {
+    "id": "108",
+    "title": "Hyper Dodger 108",
+    "desc": "Play Hyper Dodger 108 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "strategy",
+    "icon": "⚽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "109",
+    "title": "Ultra Knight 109",
+    "desc": "Play Ultra Knight 109 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "puzzle",
+    "icon": "👽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "110",
+    "title": "Super Cube 110",
+    "desc": "Play Super Cube 110 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "reflex",
+    "icon": "🎲",
+    "gradient": "blue"
+  },
+  {
+    "id": "111",
+    "title": "Galactic Knight 111",
+    "desc": "Play Galactic Knight 111 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "memory",
+    "icon": "♟️",
+    "gradient": "green"
+  },
+  {
+    "id": "112",
+    "title": "Extreme Alien 112",
+    "desc": "Play Extreme Alien 112 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "arcade",
+    "icon": "🔥",
+    "gradient": "green"
+  },
+  {
+    "id": "113",
+    "title": "Crazy Box 113",
+    "desc": "Play Crazy Box 113 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "puzzle",
+    "icon": "⚔️",
+    "gradient": "purple"
+  },
+  {
+    "id": "114",
+    "title": "Super Robot 114",
+    "desc": "Play Super Robot 114 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "puzzle",
+    "icon": "⚽",
+    "gradient": "purple"
+  },
+  {
+    "id": "115",
+    "title": "Super Alien 115",
+    "desc": "Play Super Alien 115 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "arcade",
+    "icon": "🚗",
+    "gradient": "pink"
+  },
+  {
+    "id": "116",
+    "title": "Giga Wizard 116",
+    "desc": "Play Giga Wizard 116 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "strategy",
+    "icon": "♟️",
+    "gradient": "green"
+  },
+  {
+    "id": "117",
+    "title": "Giga Knight 117",
+    "desc": "Play Giga Knight 117 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "memory",
+    "icon": "⚡",
+    "gradient": "blue"
+  },
+  {
+    "id": "118",
+    "title": "Hyper Alien 118",
+    "desc": "Play Hyper Alien 118 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "memory",
+    "icon": "🔥",
+    "gradient": "green"
+  },
+  {
+    "id": "119",
+    "title": "Shadow Shooter 119",
+    "desc": "Play Shadow Shooter 119 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "reflex",
+    "icon": "🚗",
+    "gradient": "orange"
+  },
+  {
+    "id": "120",
+    "title": "Legendary Shooter 120",
+    "desc": "Play Legendary Shooter 120 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "memory",
+    "icon": "🐸",
+    "gradient": "orange"
+  },
+  {
+    "id": "121",
+    "title": "Crazy Smasher 121",
+    "desc": "Play Crazy Smasher 121 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "strategy",
+    "icon": "🎈",
+    "gradient": "blue"
+  },
+  {
+    "id": "122",
+    "title": "Giga Alien 122",
+    "desc": "Play Giga Alien 122 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "arcade",
+    "icon": "💎",
+    "gradient": "cyan"
+  },
+  {
+    "id": "123",
+    "title": "Furious Box 123",
+    "desc": "Play Furious Box 123 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "memory",
+    "icon": "💧",
+    "gradient": "cyan"
+  },
+  {
+    "id": "124",
+    "title": "Super Racer 124",
+    "desc": "Play Super Racer 124 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "strategy",
+    "icon": "🏃",
+    "gradient": "pink"
+  },
+  {
+    "id": "125",
+    "title": "Hyper Ninja 125",
+    "desc": "Play Hyper Ninja 125 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "memory",
+    "icon": "🔥",
+    "gradient": "cyan"
+  },
+  {
+    "id": "126",
+    "title": "Epic Cube 126",
+    "desc": "Play Epic Cube 126 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "memory",
+    "icon": "💧",
+    "gradient": "cyan"
+  },
+  {
+    "id": "127",
+    "title": "Extreme Robot 127",
+    "desc": "Play Extreme Robot 127 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "arcade",
+    "icon": "🎲",
+    "gradient": "cyan"
+  },
+  {
+    "id": "128",
+    "title": "Quantum Knight 128",
+    "desc": "Play Quantum Knight 128 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "arcade",
+    "icon": "🕹️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "129",
+    "title": "Furious Matcher 129",
+    "desc": "Play Furious Matcher 129 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "strategy",
+    "icon": "💧",
+    "gradient": "blue"
+  },
+  {
+    "id": "130",
+    "title": "Giga Cube 130",
+    "desc": "Play Giga Cube 130 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "strategy",
+    "icon": "💧",
+    "gradient": "cyan"
+  },
+  {
+    "id": "131",
+    "title": "Furious Knight 131",
+    "desc": "Play Furious Knight 131 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "puzzle",
+    "icon": "💎",
+    "gradient": "purple"
+  },
+  {
+    "id": "132",
+    "title": "Light Jumper 132",
+    "desc": "Play Light Jumper 132 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "memory",
+    "icon": "💎",
+    "gradient": "pink"
+  },
+  {
+    "id": "133",
+    "title": "Galactic Dodger 133",
+    "desc": "Play Galactic Dodger 133 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "arcade",
+    "icon": "⚡",
+    "gradient": "cyan"
+  },
+  {
+    "id": "134",
+    "title": "Super Jumper 134",
+    "desc": "Play Super Jumper 134 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "reflex",
+    "icon": "💧",
+    "gradient": "purple"
+  },
+  {
+    "id": "135",
+    "title": "Turbo Clicker 135",
+    "desc": "Play Turbo Clicker 135 instantly in your browser! Simple, fast, and fun turbo action.",
+    "category": "memory",
+    "icon": "🔥",
+    "gradient": "pink"
+  },
+  {
+    "id": "136",
+    "title": "Galactic Fighter 136",
+    "desc": "Play Galactic Fighter 136 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "reflex",
+    "icon": "🚗",
+    "gradient": "purple"
+  },
+  {
+    "id": "137",
+    "title": "Light Smasher 137",
+    "desc": "Play Light Smasher 137 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "reflex",
+    "icon": "⚽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "138",
+    "title": "Crazy Smasher 138",
+    "desc": "Play Crazy Smasher 138 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "arcade",
+    "icon": "👽",
+    "gradient": "purple"
+  },
+  {
+    "id": "139",
+    "title": "Ultra Alien 139",
+    "desc": "Play Ultra Alien 139 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "arcade",
+    "icon": "🧩",
+    "gradient": "blue"
+  },
+  {
+    "id": "140",
+    "title": "Dark Builder 140",
+    "desc": "Play Dark Builder 140 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "memory",
+    "icon": "♟️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "141",
+    "title": "Extreme Matcher 141",
+    "desc": "Play Extreme Matcher 141 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "arcade",
+    "icon": "🚀",
+    "gradient": "green"
+  },
+  {
+    "id": "142",
+    "title": "Cosmic Runner 142",
+    "desc": "Play Cosmic Runner 142 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "arcade",
+    "icon": "🎸",
+    "gradient": "green"
+  },
+  {
+    "id": "143",
+    "title": "Shadow Matcher 143",
+    "desc": "Play Shadow Matcher 143 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "arcade",
+    "icon": "🏃",
+    "gradient": "pink"
+  },
+  {
+    "id": "144",
+    "title": "Shadow Dodger 144",
+    "desc": "Play Shadow Dodger 144 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "puzzle",
+    "icon": "⚽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "145",
+    "title": "Ultra Monster 145",
+    "desc": "Play Ultra Monster 145 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "arcade",
+    "icon": "🏃",
+    "gradient": "blue"
+  },
+  {
+    "id": "146",
+    "title": "Pixel Dodger 146",
+    "desc": "Play Pixel Dodger 146 instantly in your browser! Simple, fast, and fun pixel action.",
+    "category": "strategy",
+    "icon": "🎲",
+    "gradient": "green"
+  },
+  {
+    "id": "147",
+    "title": "Epic Box 147",
+    "desc": "Play Epic Box 147 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "strategy",
+    "icon": "🎯",
+    "gradient": "blue"
+  },
+  {
+    "id": "148",
+    "title": "Phantom Knight 148",
+    "desc": "Play Phantom Knight 148 instantly in your browser! Simple, fast, and fun phantom action.",
+    "category": "reflex",
+    "icon": "🧠",
+    "gradient": "green"
+  },
+  {
+    "id": "149",
+    "title": "Magic Dodger 149",
+    "desc": "Play Magic Dodger 149 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "reflex",
+    "icon": "🎈",
+    "gradient": "pink"
+  },
+  {
+    "id": "150",
+    "title": "Turbo Wizard 150",
+    "desc": "Play Turbo Wizard 150 instantly in your browser! Simple, fast, and fun turbo action.",
+    "category": "reflex",
+    "icon": "👽",
+    "gradient": "purple"
+  },
+  {
+    "id": "151",
+    "title": "Retro Dragon 151",
+    "desc": "Play Retro Dragon 151 instantly in your browser! Simple, fast, and fun retro action.",
+    "category": "puzzle",
+    "icon": "🏃",
+    "gradient": "cyan"
+  },
+  {
+    "id": "152",
+    "title": "Epic Shooter 152",
+    "desc": "Play Epic Shooter 152 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "memory",
+    "icon": "💧",
+    "gradient": "orange"
+  },
+  {
+    "id": "153",
+    "title": "Phantom Jumper 153",
+    "desc": "Play Phantom Jumper 153 instantly in your browser! Simple, fast, and fun phantom action.",
+    "category": "puzzle",
+    "icon": "🕹️",
+    "gradient": "blue"
+  },
+  {
+    "id": "154",
+    "title": "Neon Knight 154",
+    "desc": "Play Neon Knight 154 instantly in your browser! Simple, fast, and fun neon action.",
+    "category": "arcade",
+    "icon": "🏃",
+    "gradient": "pink"
+  },
+  {
+    "id": "155",
+    "title": "Mad Cube 155",
+    "desc": "Play Mad Cube 155 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "strategy",
+    "icon": "🧠",
+    "gradient": "orange"
+  },
+  {
+    "id": "156",
+    "title": "Neon Hero 156",
+    "desc": "Play Neon Hero 156 instantly in your browser! Simple, fast, and fun neon action.",
+    "category": "puzzle",
+    "icon": "🚀",
+    "gradient": "orange"
+  },
+  {
+    "id": "157",
+    "title": "Galactic Jumper 157",
+    "desc": "Play Galactic Jumper 157 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "reflex",
+    "icon": "💎",
+    "gradient": "cyan"
+  },
+  {
+    "id": "158",
+    "title": "Super Matcher 158",
+    "desc": "Play Super Matcher 158 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "reflex",
+    "icon": "⚽",
+    "gradient": "blue"
+  },
+  {
+    "id": "159",
+    "title": "Furious Knight 159",
+    "desc": "Play Furious Knight 159 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "arcade",
+    "icon": "⚽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "160",
+    "title": "Phantom Dragon 160",
+    "desc": "Play Phantom Dragon 160 instantly in your browser! Simple, fast, and fun phantom action.",
+    "category": "puzzle",
+    "icon": "🕹️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "161",
+    "title": "Magic Jumper 161",
+    "desc": "Play Magic Jumper 161 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "puzzle",
+    "icon": "💧",
+    "gradient": "orange"
+  },
+  {
+    "id": "162",
+    "title": "Epic Knight 162",
+    "desc": "Play Epic Knight 162 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "arcade",
+    "icon": "🎈",
+    "gradient": "blue"
+  },
+  {
+    "id": "163",
+    "title": "Giga Racer 163",
+    "desc": "Play Giga Racer 163 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "reflex",
+    "icon": "🎸",
+    "gradient": "purple"
+  },
+  {
+    "id": "164",
+    "title": "Ultra Knight 164",
+    "desc": "Play Ultra Knight 164 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "arcade",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "165",
+    "title": "Cosmic Breaker 165",
+    "desc": "Play Cosmic Breaker 165 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "strategy",
+    "icon": "🔥",
+    "gradient": "blue"
+  },
+  {
+    "id": "166",
+    "title": "Phantom Matcher 166",
+    "desc": "Play Phantom Matcher 166 instantly in your browser! Simple, fast, and fun phantom action.",
+    "category": "puzzle",
+    "icon": "🐸",
+    "gradient": "purple"
+  },
+  {
+    "id": "167",
+    "title": "Epic Shooter 167",
+    "desc": "Play Epic Shooter 167 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "strategy",
+    "icon": "💎",
+    "gradient": "pink"
+  },
+  {
+    "id": "168",
+    "title": "Legendary Runner 168",
+    "desc": "Play Legendary Runner 168 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "puzzle",
+    "icon": "🏃",
+    "gradient": "blue"
+  },
+  {
+    "id": "169",
+    "title": "Furious Dragon 169",
+    "desc": "Play Furious Dragon 169 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "memory",
+    "icon": "🎲",
+    "gradient": "orange"
+  },
+  {
+    "id": "170",
+    "title": "Light Zombie 170",
+    "desc": "Play Light Zombie 170 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "reflex",
+    "icon": "⚡",
+    "gradient": "purple"
+  },
+  {
+    "id": "171",
+    "title": "Pixel Box 171",
+    "desc": "Play Pixel Box 171 instantly in your browser! Simple, fast, and fun pixel action.",
+    "category": "strategy",
+    "icon": "🎯",
+    "gradient": "blue"
+  },
+  {
+    "id": "172",
+    "title": "Mega Alien 172",
+    "desc": "Play Mega Alien 172 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "strategy",
+    "icon": "🚗",
+    "gradient": "green"
+  },
+  {
+    "id": "173",
+    "title": "Cosmic Dragon 173",
+    "desc": "Play Cosmic Dragon 173 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "reflex",
+    "icon": "💧",
+    "gradient": "purple"
+  },
+  {
+    "id": "174",
+    "title": "Ultra Hero 174",
+    "desc": "Play Ultra Hero 174 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "reflex",
+    "icon": "🎲",
+    "gradient": "purple"
+  },
+  {
+    "id": "175",
+    "title": "Pixel Matcher 175",
+    "desc": "Play Pixel Matcher 175 instantly in your browser! Simple, fast, and fun pixel action.",
+    "category": "reflex",
+    "icon": "🚗",
+    "gradient": "blue"
+  },
+  {
+    "id": "176",
+    "title": "Neon Smasher 176",
+    "desc": "Play Neon Smasher 176 instantly in your browser! Simple, fast, and fun neon action.",
+    "category": "strategy",
+    "icon": "🎸",
+    "gradient": "cyan"
+  },
+  {
+    "id": "177",
+    "title": "Hyper Hero 177",
+    "desc": "Play Hyper Hero 177 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "strategy",
+    "icon": "🧠",
+    "gradient": "purple"
+  },
+  {
+    "id": "178",
+    "title": "Neon Monster 178",
+    "desc": "Play Neon Monster 178 instantly in your browser! Simple, fast, and fun neon action.",
+    "category": "reflex",
+    "icon": "👽",
+    "gradient": "pink"
+  },
+  {
+    "id": "179",
+    "title": "Pixel Wizard 179",
+    "desc": "Play Pixel Wizard 179 instantly in your browser! Simple, fast, and fun pixel action.",
+    "category": "strategy",
+    "icon": "🏃",
+    "gradient": "blue"
+  },
+  {
+    "id": "180",
+    "title": "Ultra Zombie 180",
+    "desc": "Play Ultra Zombie 180 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "strategy",
+    "icon": "🚗",
+    "gradient": "green"
+  },
+  {
+    "id": "181",
+    "title": "Giga Breaker 181",
+    "desc": "Play Giga Breaker 181 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "arcade",
+    "icon": "⚡",
+    "gradient": "pink"
+  },
+  {
+    "id": "182",
+    "title": "Mega Shooter 182",
+    "desc": "Play Mega Shooter 182 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "memory",
+    "icon": "🧩",
+    "gradient": "orange"
+  },
+  {
+    "id": "183",
+    "title": "Mad Clicker 183",
+    "desc": "Play Mad Clicker 183 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "puzzle",
+    "icon": "🎯",
+    "gradient": "green"
+  },
+  {
+    "id": "184",
+    "title": "Dark Cube 184",
+    "desc": "Play Dark Cube 184 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "strategy",
+    "icon": "✨",
+    "gradient": "green"
+  },
+  {
+    "id": "185",
+    "title": "Ultra Jumper 185",
+    "desc": "Play Ultra Jumper 185 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "puzzle",
+    "icon": "⚽",
+    "gradient": "purple"
+  },
+  {
+    "id": "186",
+    "title": "Neon Robot 186",
+    "desc": "Play Neon Robot 186 instantly in your browser! Simple, fast, and fun neon action.",
+    "category": "reflex",
+    "icon": "🎲",
+    "gradient": "purple"
+  },
+  {
+    "id": "187",
+    "title": "Neon Shooter 187",
+    "desc": "Play Neon Shooter 187 instantly in your browser! Simple, fast, and fun neon action.",
+    "category": "reflex",
+    "icon": "👽",
+    "gradient": "orange"
+  },
+  {
+    "id": "188",
+    "title": "Furious Clicker 188",
+    "desc": "Play Furious Clicker 188 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "memory",
+    "icon": "🐸",
+    "gradient": "blue"
+  },
+  {
+    "id": "189",
+    "title": "Cosmic Robot 189",
+    "desc": "Play Cosmic Robot 189 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "reflex",
+    "icon": "🚗",
+    "gradient": "cyan"
+  },
+  {
+    "id": "190",
+    "title": "Extreme Robot 190",
+    "desc": "Play Extreme Robot 190 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "puzzle",
+    "icon": "🐸",
+    "gradient": "green"
+  },
+  {
+    "id": "191",
+    "title": "Crazy Dragon 191",
+    "desc": "Play Crazy Dragon 191 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "memory",
+    "icon": "⚽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "192",
+    "title": "Crazy Clicker 192",
+    "desc": "Play Crazy Clicker 192 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "reflex",
+    "icon": "🚗",
+    "gradient": "green"
+  },
+  {
+    "id": "193",
+    "title": "Fast Runner 193",
+    "desc": "Play Fast Runner 193 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "memory",
+    "icon": "🚀",
+    "gradient": "pink"
+  },
+  {
+    "id": "194",
+    "title": "Mad Racer 194",
+    "desc": "Play Mad Racer 194 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "puzzle",
+    "icon": "🎯",
+    "gradient": "green"
+  },
+  {
+    "id": "195",
+    "title": "Legendary Clicker 195",
+    "desc": "Play Legendary Clicker 195 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "reflex",
+    "icon": "✨",
+    "gradient": "green"
+  },
+  {
+    "id": "196",
+    "title": "Dark Smasher 196",
+    "desc": "Play Dark Smasher 196 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "strategy",
+    "icon": "⚔️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "197",
+    "title": "Phantom Monster 197",
+    "desc": "Play Phantom Monster 197 instantly in your browser! Simple, fast, and fun phantom action.",
+    "category": "reflex",
+    "icon": "🎸",
+    "gradient": "pink"
+  },
+  {
+    "id": "198",
+    "title": "Light Alien 198",
+    "desc": "Play Light Alien 198 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "puzzle",
+    "icon": "🎯",
+    "gradient": "green"
+  },
+  {
+    "id": "199",
+    "title": "Turbo Robot 199",
+    "desc": "Play Turbo Robot 199 instantly in your browser! Simple, fast, and fun turbo action.",
+    "category": "reflex",
+    "icon": "🎯",
+    "gradient": "cyan"
+  },
+  {
+    "id": "200",
+    "title": "Light Ninja 200",
+    "desc": "Play Light Ninja 200 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "reflex",
+    "icon": "🧩",
+    "gradient": "purple"
+  },
+  {
+    "id": "201",
+    "title": "Furious Runner 201",
+    "desc": "Play Furious Runner 201 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "reflex",
+    "icon": "🎸",
+    "gradient": "green"
+  },
+  {
+    "id": "202",
+    "title": "Pixel Breaker 202",
+    "desc": "Play Pixel Breaker 202 instantly in your browser! Simple, fast, and fun pixel action.",
+    "category": "strategy",
+    "icon": "✨",
+    "gradient": "blue"
+  },
+  {
+    "id": "203",
+    "title": "Epic Monster 203",
+    "desc": "Play Epic Monster 203 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "reflex",
+    "icon": "🐸",
+    "gradient": "cyan"
+  },
+  {
+    "id": "204",
+    "title": "Mega Jumper 204",
+    "desc": "Play Mega Jumper 204 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "arcade",
+    "icon": "🚗",
+    "gradient": "pink"
+  },
+  {
+    "id": "205",
+    "title": "Phantom Jumper 205",
+    "desc": "Play Phantom Jumper 205 instantly in your browser! Simple, fast, and fun phantom action.",
+    "category": "puzzle",
+    "icon": "🐸",
+    "gradient": "pink"
+  },
+  {
+    "id": "206",
+    "title": "Pixel Knight 206",
+    "desc": "Play Pixel Knight 206 instantly in your browser! Simple, fast, and fun pixel action.",
+    "category": "strategy",
+    "icon": "🕹️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "207",
+    "title": "Cosmic Ninja 207",
+    "desc": "Play Cosmic Ninja 207 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "memory",
+    "icon": "🎯",
+    "gradient": "pink"
+  },
+  {
+    "id": "208",
+    "title": "Cosmic Matcher 208",
+    "desc": "Play Cosmic Matcher 208 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "arcade",
+    "icon": "⚔️",
+    "gradient": "orange"
+  },
+  {
+    "id": "209",
+    "title": "Mega Robot 209",
+    "desc": "Play Mega Robot 209 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "memory",
+    "icon": "🧠",
+    "gradient": "cyan"
+  },
+  {
+    "id": "210",
+    "title": "Ultra Monster 210",
+    "desc": "Play Ultra Monster 210 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "arcade",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "211",
+    "title": "Galactic Builder 211",
+    "desc": "Play Galactic Builder 211 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "puzzle",
+    "icon": "🎲",
+    "gradient": "blue"
+  },
+  {
+    "id": "212",
+    "title": "Ultra Racer 212",
+    "desc": "Play Ultra Racer 212 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "memory",
+    "icon": "🧠",
+    "gradient": "orange"
+  },
+  {
+    "id": "213",
+    "title": "Galactic Dragon 213",
+    "desc": "Play Galactic Dragon 213 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "memory",
+    "icon": "🐸",
+    "gradient": "orange"
+  },
+  {
+    "id": "214",
+    "title": "Legendary Racer 214",
+    "desc": "Play Legendary Racer 214 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "arcade",
+    "icon": "🎈",
+    "gradient": "blue"
+  },
+  {
+    "id": "215",
+    "title": "Pixel Hero 215",
+    "desc": "Play Pixel Hero 215 instantly in your browser! Simple, fast, and fun pixel action.",
+    "category": "puzzle",
+    "icon": "🧠",
+    "gradient": "pink"
+  },
+  {
+    "id": "216",
+    "title": "Furious Matcher 216",
+    "desc": "Play Furious Matcher 216 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "strategy",
+    "icon": "🎯",
+    "gradient": "cyan"
+  },
+  {
+    "id": "217",
+    "title": "Cosmic Robot 217",
+    "desc": "Play Cosmic Robot 217 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "puzzle",
+    "icon": "🧠",
+    "gradient": "blue"
+  },
+  {
+    "id": "218",
+    "title": "Extreme Monster 218",
+    "desc": "Play Extreme Monster 218 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "memory",
+    "icon": "♟️",
+    "gradient": "pink"
+  },
+  {
+    "id": "219",
+    "title": "Epic Box 219",
+    "desc": "Play Epic Box 219 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "puzzle",
+    "icon": "⚔️",
+    "gradient": "orange"
+  },
+  {
+    "id": "220",
+    "title": "Mad Ninja 220",
+    "desc": "Play Mad Ninja 220 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "arcade",
+    "icon": "🏃",
+    "gradient": "green"
+  },
+  {
+    "id": "221",
+    "title": "Galactic Fighter 221",
+    "desc": "Play Galactic Fighter 221 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "puzzle",
+    "icon": "🧠",
+    "gradient": "green"
+  },
+  {
+    "id": "222",
+    "title": "Giga Jumper 222",
+    "desc": "Play Giga Jumper 222 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "strategy",
+    "icon": "⚽",
+    "gradient": "purple"
+  },
+  {
+    "id": "223",
+    "title": "Hyper Wizard 223",
+    "desc": "Play Hyper Wizard 223 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "puzzle",
+    "icon": "🚗",
+    "gradient": "blue"
+  },
+  {
+    "id": "224",
+    "title": "Galactic Alien 224",
+    "desc": "Play Galactic Alien 224 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "memory",
+    "icon": "🚀",
+    "gradient": "cyan"
+  },
+  {
+    "id": "225",
+    "title": "Super Fighter 225",
+    "desc": "Play Super Fighter 225 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "strategy",
+    "icon": "⚡",
+    "gradient": "orange"
+  },
+  {
+    "id": "226",
+    "title": "Quantum Cube 226",
+    "desc": "Play Quantum Cube 226 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "strategy",
+    "icon": "💧",
+    "gradient": "cyan"
+  },
+  {
+    "id": "227",
+    "title": "Mad Wizard 227",
+    "desc": "Play Mad Wizard 227 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "memory",
+    "icon": "🧩",
+    "gradient": "blue"
+  },
+  {
+    "id": "228",
+    "title": "Galactic Box 228",
+    "desc": "Play Galactic Box 228 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "arcade",
+    "icon": "🧠",
+    "gradient": "blue"
+  },
+  {
+    "id": "229",
+    "title": "Ultra Racer 229",
+    "desc": "Play Ultra Racer 229 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "memory",
+    "icon": "🎸",
+    "gradient": "green"
+  },
+  {
+    "id": "230",
+    "title": "Cosmic Jumper 230",
+    "desc": "Play Cosmic Jumper 230 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "memory",
+    "icon": "🎈",
+    "gradient": "orange"
+  },
+  {
+    "id": "231",
+    "title": "Hyper Fighter 231",
+    "desc": "Play Hyper Fighter 231 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "reflex",
+    "icon": "🚀",
+    "gradient": "purple"
+  },
+  {
+    "id": "232",
+    "title": "Mega Ninja 232",
+    "desc": "Play Mega Ninja 232 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "puzzle",
+    "icon": "🧩",
+    "gradient": "green"
+  },
+  {
+    "id": "233",
+    "title": "Ultra Smasher 233",
+    "desc": "Play Ultra Smasher 233 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "reflex",
+    "icon": "🏃",
+    "gradient": "cyan"
+  },
+  {
+    "id": "234",
+    "title": "Super Breaker 234",
+    "desc": "Play Super Breaker 234 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "memory",
+    "icon": "👽",
+    "gradient": "pink"
+  },
+  {
+    "id": "235",
+    "title": "Cosmic Robot 235",
+    "desc": "Play Cosmic Robot 235 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "reflex",
+    "icon": "⚽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "236",
+    "title": "Magic Monster 236",
+    "desc": "Play Magic Monster 236 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "memory",
+    "icon": "⚽",
+    "gradient": "purple"
+  },
+  {
+    "id": "237",
+    "title": "Ultra Builder 237",
+    "desc": "Play Ultra Builder 237 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "memory",
+    "icon": "🕹️",
+    "gradient": "orange"
+  },
+  {
+    "id": "238",
+    "title": "Extreme Dodger 238",
+    "desc": "Play Extreme Dodger 238 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "memory",
+    "icon": "🕹️",
+    "gradient": "purple"
+  },
+  {
+    "id": "239",
+    "title": "Legendary Wizard 239",
+    "desc": "Play Legendary Wizard 239 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "arcade",
+    "icon": "🎲",
+    "gradient": "purple"
+  },
+  {
+    "id": "240",
+    "title": "Extreme Matcher 240",
+    "desc": "Play Extreme Matcher 240 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "strategy",
+    "icon": "🏃",
+    "gradient": "green"
+  },
+  {
+    "id": "241",
+    "title": "Magic Zombie 241",
+    "desc": "Play Magic Zombie 241 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "memory",
+    "icon": "🚀",
+    "gradient": "cyan"
+  },
+  {
+    "id": "242",
+    "title": "Extreme Cube 242",
+    "desc": "Play Extreme Cube 242 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "arcade",
+    "icon": "♟️",
+    "gradient": "green"
+  },
+  {
+    "id": "243",
+    "title": "Cosmic Jumper 243",
+    "desc": "Play Cosmic Jumper 243 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "arcade",
+    "icon": "🎯",
+    "gradient": "pink"
+  },
+  {
+    "id": "244",
+    "title": "Shadow Ninja 244",
+    "desc": "Play Shadow Ninja 244 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "arcade",
+    "icon": "⚽",
+    "gradient": "blue"
+  },
+  {
+    "id": "245",
+    "title": "Crazy Fighter 245",
+    "desc": "Play Crazy Fighter 245 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "arcade",
+    "icon": "💧",
+    "gradient": "cyan"
+  },
+  {
+    "id": "246",
+    "title": "Giga Hero 246",
+    "desc": "Play Giga Hero 246 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "memory",
+    "icon": "🐸",
+    "gradient": "blue"
+  },
+  {
+    "id": "247",
+    "title": "Mad Alien 247",
+    "desc": "Play Mad Alien 247 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "puzzle",
+    "icon": "💧",
+    "gradient": "blue"
+  },
+  {
+    "id": "248",
+    "title": "Retro Knight 248",
+    "desc": "Play Retro Knight 248 instantly in your browser! Simple, fast, and fun retro action.",
+    "category": "arcade",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "249",
+    "title": "Mega Fighter 249",
+    "desc": "Play Mega Fighter 249 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "memory",
+    "icon": "⚽",
+    "gradient": "purple"
+  },
+  {
+    "id": "250",
+    "title": "Shadow Ninja 250",
+    "desc": "Play Shadow Ninja 250 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "reflex",
+    "icon": "🎈",
+    "gradient": "blue"
+  },
+  {
+    "id": "251",
+    "title": "Retro Wizard 251",
+    "desc": "Play Retro Wizard 251 instantly in your browser! Simple, fast, and fun retro action.",
+    "category": "reflex",
+    "icon": "👽",
+    "gradient": "pink"
+  },
+  {
+    "id": "252",
+    "title": "Legendary Shooter 252",
+    "desc": "Play Legendary Shooter 252 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "reflex",
+    "icon": "⚔️",
+    "gradient": "pink"
+  },
+  {
+    "id": "253",
+    "title": "Light Wizard 253",
+    "desc": "Play Light Wizard 253 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "reflex",
+    "icon": "🧩",
+    "gradient": "purple"
+  },
+  {
+    "id": "254",
+    "title": "Dark Zombie 254",
+    "desc": "Play Dark Zombie 254 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "arcade",
+    "icon": "🎈",
+    "gradient": "pink"
+  },
+  {
+    "id": "255",
+    "title": "Mad Smasher 255",
+    "desc": "Play Mad Smasher 255 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "arcade",
+    "icon": "🚗",
+    "gradient": "orange"
+  },
+  {
+    "id": "256",
+    "title": "Super Ninja 256",
+    "desc": "Play Super Ninja 256 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "arcade",
+    "icon": "🕹️",
+    "gradient": "green"
+  },
+  {
+    "id": "257",
+    "title": "Phantom Cube 257",
+    "desc": "Play Phantom Cube 257 instantly in your browser! Simple, fast, and fun phantom action.",
+    "category": "strategy",
+    "icon": "🏃",
+    "gradient": "blue"
+  },
+  {
+    "id": "258",
+    "title": "Dark Racer 258",
+    "desc": "Play Dark Racer 258 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "arcade",
+    "icon": "🎸",
+    "gradient": "green"
+  },
+  {
+    "id": "259",
+    "title": "Mad Monster 259",
+    "desc": "Play Mad Monster 259 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "arcade",
+    "icon": "🎯",
+    "gradient": "orange"
+  },
+  {
+    "id": "260",
+    "title": "Legendary Jumper 260",
+    "desc": "Play Legendary Jumper 260 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "reflex",
+    "icon": "🎸",
+    "gradient": "blue"
+  },
+  {
+    "id": "261",
+    "title": "Cosmic Alien 261",
+    "desc": "Play Cosmic Alien 261 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "memory",
+    "icon": "🔥",
+    "gradient": "cyan"
+  },
+  {
+    "id": "262",
+    "title": "Light Robot 262",
+    "desc": "Play Light Robot 262 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "strategy",
+    "icon": "🕹️",
+    "gradient": "orange"
+  },
+  {
+    "id": "263",
+    "title": "Magic Builder 263",
+    "desc": "Play Magic Builder 263 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "reflex",
+    "icon": "🎲",
+    "gradient": "orange"
+  },
+  {
+    "id": "264",
+    "title": "Crazy Shooter 264",
+    "desc": "Play Crazy Shooter 264 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "reflex",
+    "icon": "👽",
+    "gradient": "purple"
+  },
+  {
+    "id": "265",
+    "title": "Cosmic Monster 265",
+    "desc": "Play Cosmic Monster 265 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "reflex",
+    "icon": "🧠",
+    "gradient": "orange"
+  },
+  {
+    "id": "266",
+    "title": "Light Box 266",
+    "desc": "Play Light Box 266 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "arcade",
+    "icon": "💎",
+    "gradient": "purple"
+  },
+  {
+    "id": "267",
+    "title": "Quantum Clicker 267",
+    "desc": "Play Quantum Clicker 267 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "reflex",
+    "icon": "🧠",
+    "gradient": "pink"
+  },
+  {
+    "id": "268",
+    "title": "Mega Dragon 268",
+    "desc": "Play Mega Dragon 268 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "strategy",
+    "icon": "🕹️",
+    "gradient": "orange"
+  },
+  {
+    "id": "269",
+    "title": "Quantum Alien 269",
+    "desc": "Play Quantum Alien 269 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "arcade",
+    "icon": "🏃",
+    "gradient": "blue"
+  },
+  {
+    "id": "270",
+    "title": "Turbo Builder 270",
+    "desc": "Play Turbo Builder 270 instantly in your browser! Simple, fast, and fun turbo action.",
+    "category": "arcade",
+    "icon": "🏃",
+    "gradient": "orange"
+  },
+  {
+    "id": "271",
+    "title": "Shadow Racer 271",
+    "desc": "Play Shadow Racer 271 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "memory",
+    "icon": "🐸",
+    "gradient": "pink"
+  },
+  {
+    "id": "272",
+    "title": "Cosmic Cube 272",
+    "desc": "Play Cosmic Cube 272 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "strategy",
+    "icon": "⚡",
+    "gradient": "orange"
+  },
+  {
+    "id": "273",
+    "title": "Crazy Hero 273",
+    "desc": "Play Crazy Hero 273 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "arcade",
+    "icon": "⚽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "274",
+    "title": "Furious Wizard 274",
+    "desc": "Play Furious Wizard 274 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "reflex",
+    "icon": "✨",
+    "gradient": "purple"
+  },
+  {
+    "id": "275",
+    "title": "Hyper Box 275",
+    "desc": "Play Hyper Box 275 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "arcade",
+    "icon": "🚗",
+    "gradient": "purple"
+  },
+  {
+    "id": "276",
+    "title": "Extreme Dodger 276",
+    "desc": "Play Extreme Dodger 276 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "arcade",
+    "icon": "🧠",
+    "gradient": "cyan"
+  },
+  {
+    "id": "277",
+    "title": "Super Monster 277",
+    "desc": "Play Super Monster 277 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "reflex",
+    "icon": "🚗",
+    "gradient": "orange"
+  },
+  {
+    "id": "278",
+    "title": "Quantum Builder 278",
+    "desc": "Play Quantum Builder 278 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "strategy",
+    "icon": "💎",
+    "gradient": "purple"
+  },
+  {
+    "id": "279",
+    "title": "Super Dragon 279",
+    "desc": "Play Super Dragon 279 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "reflex",
+    "icon": "⚽",
+    "gradient": "green"
+  },
+  {
+    "id": "280",
+    "title": "Fast Racer 280",
+    "desc": "Play Fast Racer 280 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "puzzle",
+    "icon": "💎",
+    "gradient": "blue"
+  },
+  {
+    "id": "281",
+    "title": "Legendary Dodger 281",
+    "desc": "Play Legendary Dodger 281 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "arcade",
+    "icon": "🎸",
+    "gradient": "orange"
+  },
+  {
+    "id": "282",
+    "title": "Fast Smasher 282",
+    "desc": "Play Fast Smasher 282 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "memory",
+    "icon": "🚗",
+    "gradient": "purple"
+  },
+  {
+    "id": "283",
+    "title": "Shadow Racer 283",
+    "desc": "Play Shadow Racer 283 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "puzzle",
+    "icon": "🧩",
+    "gradient": "blue"
+  },
+  {
+    "id": "284",
+    "title": "Quantum Dodger 284",
+    "desc": "Play Quantum Dodger 284 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "puzzle",
+    "icon": "🎈",
+    "gradient": "orange"
+  },
+  {
+    "id": "285",
+    "title": "Neon Ninja 285",
+    "desc": "Play Neon Ninja 285 instantly in your browser! Simple, fast, and fun neon action.",
+    "category": "memory",
+    "icon": "🧩",
+    "gradient": "blue"
+  },
+  {
+    "id": "286",
+    "title": "Ultra Fighter 286",
+    "desc": "Play Ultra Fighter 286 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "strategy",
+    "icon": "🎲",
+    "gradient": "cyan"
+  },
+  {
+    "id": "287",
+    "title": "Giga Box 287",
+    "desc": "Play Giga Box 287 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "strategy",
+    "icon": "⚡",
+    "gradient": "blue"
+  },
+  {
+    "id": "288",
+    "title": "Fast Fighter 288",
+    "desc": "Play Fast Fighter 288 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "puzzle",
+    "icon": "🎸",
+    "gradient": "purple"
+  },
+  {
+    "id": "289",
+    "title": "Epic Dodger 289",
+    "desc": "Play Epic Dodger 289 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "memory",
+    "icon": "✨",
+    "gradient": "cyan"
+  },
+  {
+    "id": "290",
+    "title": "Shadow Clicker 290",
+    "desc": "Play Shadow Clicker 290 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "arcade",
+    "icon": "🔥",
+    "gradient": "blue"
+  },
+  {
+    "id": "291",
+    "title": "Crazy Matcher 291",
+    "desc": "Play Crazy Matcher 291 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "reflex",
+    "icon": "💎",
+    "gradient": "pink"
+  },
+  {
+    "id": "292",
+    "title": "Crazy Wizard 292",
+    "desc": "Play Crazy Wizard 292 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "puzzle",
+    "icon": "🧠",
+    "gradient": "purple"
+  },
+  {
+    "id": "293",
+    "title": "Mega Matcher 293",
+    "desc": "Play Mega Matcher 293 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "arcade",
+    "icon": "👽",
+    "gradient": "green"
+  },
+  {
+    "id": "294",
+    "title": "Furious Dragon 294",
+    "desc": "Play Furious Dragon 294 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "puzzle",
+    "icon": "🚗",
+    "gradient": "orange"
+  },
+  {
+    "id": "295",
+    "title": "Ultra Ninja 295",
+    "desc": "Play Ultra Ninja 295 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "reflex",
+    "icon": "🧩",
+    "gradient": "orange"
+  },
+  {
+    "id": "296",
+    "title": "Legendary Clicker 296",
+    "desc": "Play Legendary Clicker 296 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "memory",
+    "icon": "👽",
+    "gradient": "orange"
+  },
+  {
+    "id": "297",
+    "title": "Cosmic Matcher 297",
+    "desc": "Play Cosmic Matcher 297 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "strategy",
+    "icon": "🎈",
+    "gradient": "blue"
+  },
+  {
+    "id": "298",
+    "title": "Fast Breaker 298",
+    "desc": "Play Fast Breaker 298 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "arcade",
+    "icon": "🚗",
+    "gradient": "purple"
+  },
+  {
+    "id": "299",
+    "title": "Legendary Box 299",
+    "desc": "Play Legendary Box 299 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "memory",
+    "icon": "🔥",
+    "gradient": "green"
+  },
+  {
+    "id": "300",
+    "title": "Furious Runner 300",
+    "desc": "Play Furious Runner 300 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "reflex",
+    "icon": "🚗",
+    "gradient": "purple"
+  },
+  {
+    "id": "301",
+    "title": "Pixel Clicker 301",
+    "desc": "Play Pixel Clicker 301 instantly in your browser! Simple, fast, and fun pixel action.",
+    "category": "memory",
+    "icon": "🚗",
+    "gradient": "orange"
+  },
+  {
+    "id": "302",
+    "title": "Quantum Matcher 302",
+    "desc": "Play Quantum Matcher 302 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "puzzle",
+    "icon": "🔥",
+    "gradient": "pink"
+  },
+  {
+    "id": "303",
+    "title": "Shadow Jumper 303",
+    "desc": "Play Shadow Jumper 303 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "puzzle",
+    "icon": "👽",
+    "gradient": "green"
+  },
+  {
+    "id": "304",
+    "title": "Retro Hero 304",
+    "desc": "Play Retro Hero 304 instantly in your browser! Simple, fast, and fun retro action.",
+    "category": "strategy",
+    "icon": "👽",
+    "gradient": "pink"
+  },
+  {
+    "id": "305",
+    "title": "Ultra Alien 305",
+    "desc": "Play Ultra Alien 305 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "memory",
+    "icon": "✨",
+    "gradient": "cyan"
+  },
+  {
+    "id": "306",
+    "title": "Mad Matcher 306",
+    "desc": "Play Mad Matcher 306 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "strategy",
+    "icon": "⚽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "307",
+    "title": "Phantom Wizard 307",
+    "desc": "Play Phantom Wizard 307 instantly in your browser! Simple, fast, and fun phantom action.",
+    "category": "arcade",
+    "icon": "💎",
+    "gradient": "purple"
+  },
+  {
+    "id": "308",
+    "title": "Quantum Dodger 308",
+    "desc": "Play Quantum Dodger 308 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "arcade",
+    "icon": "⚡",
+    "gradient": "blue"
+  },
+  {
+    "id": "309",
+    "title": "Light Smasher 309",
+    "desc": "Play Light Smasher 309 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "reflex",
+    "icon": "🚀",
+    "gradient": "purple"
+  },
+  {
+    "id": "310",
+    "title": "Quantum Builder 310",
+    "desc": "Play Quantum Builder 310 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "reflex",
+    "icon": "💎",
+    "gradient": "blue"
+  },
+  {
+    "id": "311",
+    "title": "Dark Breaker 311",
+    "desc": "Play Dark Breaker 311 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "reflex",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "312",
+    "title": "Quantum Dragon 312",
+    "desc": "Play Quantum Dragon 312 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "puzzle",
+    "icon": "🚗",
+    "gradient": "pink"
+  },
+  {
+    "id": "313",
+    "title": "Mad Wizard 313",
+    "desc": "Play Mad Wizard 313 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "puzzle",
+    "icon": "💧",
+    "gradient": "blue"
+  },
+  {
+    "id": "314",
+    "title": "Fast Breaker 314",
+    "desc": "Play Fast Breaker 314 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "puzzle",
+    "icon": "👽",
+    "gradient": "orange"
+  },
+  {
+    "id": "315",
+    "title": "Epic Smasher 315",
+    "desc": "Play Epic Smasher 315 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "strategy",
+    "icon": "⚔️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "316",
+    "title": "Neon Smasher 316",
+    "desc": "Play Neon Smasher 316 instantly in your browser! Simple, fast, and fun neon action.",
+    "category": "puzzle",
+    "icon": "💎",
+    "gradient": "blue"
+  },
+  {
+    "id": "317",
+    "title": "Phantom Dodger 317",
+    "desc": "Play Phantom Dodger 317 instantly in your browser! Simple, fast, and fun phantom action.",
+    "category": "arcade",
+    "icon": "⚡",
+    "gradient": "cyan"
+  },
+  {
+    "id": "318",
+    "title": "Magic Knight 318",
+    "desc": "Play Magic Knight 318 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "strategy",
+    "icon": "🎲",
+    "gradient": "pink"
+  },
+  {
+    "id": "319",
+    "title": "Magic Monster 319",
+    "desc": "Play Magic Monster 319 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "reflex",
+    "icon": "🕹️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "320",
+    "title": "Galactic Robot 320",
+    "desc": "Play Galactic Robot 320 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "arcade",
+    "icon": "⚡",
+    "gradient": "pink"
+  },
+  {
+    "id": "321",
+    "title": "Pixel Ninja 321",
+    "desc": "Play Pixel Ninja 321 instantly in your browser! Simple, fast, and fun pixel action.",
+    "category": "reflex",
+    "icon": "⚡",
+    "gradient": "purple"
+  },
+  {
+    "id": "322",
+    "title": "Mad Fighter 322",
+    "desc": "Play Mad Fighter 322 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "puzzle",
+    "icon": "🎲",
+    "gradient": "green"
+  },
+  {
+    "id": "323",
+    "title": "Neon Racer 323",
+    "desc": "Play Neon Racer 323 instantly in your browser! Simple, fast, and fun neon action.",
+    "category": "puzzle",
+    "icon": "👽",
+    "gradient": "purple"
+  },
+  {
+    "id": "324",
+    "title": "Turbo Builder 324",
+    "desc": "Play Turbo Builder 324 instantly in your browser! Simple, fast, and fun turbo action.",
+    "category": "strategy",
+    "icon": "🏃",
+    "gradient": "pink"
+  },
+  {
+    "id": "325",
+    "title": "Mega Monster 325",
+    "desc": "Play Mega Monster 325 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "strategy",
+    "icon": "👽",
+    "gradient": "pink"
+  },
+  {
+    "id": "326",
+    "title": "Dark Smasher 326",
+    "desc": "Play Dark Smasher 326 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "memory",
+    "icon": "🔥",
+    "gradient": "green"
+  },
+  {
+    "id": "327",
+    "title": "Phantom Cube 327",
+    "desc": "Play Phantom Cube 327 instantly in your browser! Simple, fast, and fun phantom action.",
+    "category": "arcade",
+    "icon": "🔥",
+    "gradient": "blue"
+  },
+  {
+    "id": "328",
+    "title": "Crazy Jumper 328",
+    "desc": "Play Crazy Jumper 328 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "arcade",
+    "icon": "👽",
+    "gradient": "green"
+  },
+  {
+    "id": "329",
+    "title": "Legendary Builder 329",
+    "desc": "Play Legendary Builder 329 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "arcade",
+    "icon": "💧",
+    "gradient": "purple"
+  },
+  {
+    "id": "330",
+    "title": "Dark Dodger 330",
+    "desc": "Play Dark Dodger 330 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "strategy",
+    "icon": "👽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "331",
+    "title": "Giga Builder 331",
+    "desc": "Play Giga Builder 331 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "reflex",
+    "icon": "💧",
+    "gradient": "green"
+  },
+  {
+    "id": "332",
+    "title": "Ultra Hero 332",
+    "desc": "Play Ultra Hero 332 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "reflex",
+    "icon": "🚀",
+    "gradient": "purple"
+  },
+  {
+    "id": "333",
+    "title": "Quantum Fighter 333",
+    "desc": "Play Quantum Fighter 333 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "reflex",
+    "icon": "🚗",
+    "gradient": "blue"
+  },
+  {
+    "id": "334",
+    "title": "Giga Robot 334",
+    "desc": "Play Giga Robot 334 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "puzzle",
+    "icon": "🔥",
+    "gradient": "pink"
+  },
+  {
+    "id": "335",
+    "title": "Galactic Robot 335",
+    "desc": "Play Galactic Robot 335 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "arcade",
+    "icon": "🐸",
+    "gradient": "pink"
+  },
+  {
+    "id": "336",
+    "title": "Legendary Cube 336",
+    "desc": "Play Legendary Cube 336 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "memory",
+    "icon": "⚔️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "337",
+    "title": "Crazy Fighter 337",
+    "desc": "Play Crazy Fighter 337 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "memory",
+    "icon": "🕹️",
+    "gradient": "pink"
+  },
+  {
+    "id": "338",
+    "title": "Mad Ninja 338",
+    "desc": "Play Mad Ninja 338 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "strategy",
+    "icon": "🧩",
+    "gradient": "green"
+  },
+  {
+    "id": "339",
+    "title": "Mad Zombie 339",
+    "desc": "Play Mad Zombie 339 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "arcade",
+    "icon": "🐸",
+    "gradient": "green"
+  },
+  {
+    "id": "340",
+    "title": "Light Ninja 340",
+    "desc": "Play Light Ninja 340 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "reflex",
+    "icon": "♟️",
+    "gradient": "orange"
+  },
+  {
+    "id": "341",
+    "title": "Dark Cube 341",
+    "desc": "Play Dark Cube 341 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "memory",
+    "icon": "🎲",
+    "gradient": "blue"
+  },
+  {
+    "id": "342",
+    "title": "Super Knight 342",
+    "desc": "Play Super Knight 342 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "arcade",
+    "icon": "🎯",
+    "gradient": "pink"
+  },
+  {
+    "id": "343",
+    "title": "Pixel Builder 343",
+    "desc": "Play Pixel Builder 343 instantly in your browser! Simple, fast, and fun pixel action.",
+    "category": "memory",
+    "icon": "🏃",
+    "gradient": "pink"
+  },
+  {
+    "id": "344",
+    "title": "Crazy Builder 344",
+    "desc": "Play Crazy Builder 344 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "memory",
+    "icon": "🚗",
+    "gradient": "blue"
+  },
+  {
+    "id": "345",
+    "title": "Dark Runner 345",
+    "desc": "Play Dark Runner 345 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "arcade",
+    "icon": "🚗",
+    "gradient": "orange"
+  },
+  {
+    "id": "346",
+    "title": "Magic Runner 346",
+    "desc": "Play Magic Runner 346 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "memory",
+    "icon": "👽",
+    "gradient": "purple"
+  },
+  {
+    "id": "347",
+    "title": "Pixel Dragon 347",
+    "desc": "Play Pixel Dragon 347 instantly in your browser! Simple, fast, and fun pixel action.",
+    "category": "strategy",
+    "icon": "💧",
+    "gradient": "green"
+  },
+  {
+    "id": "348",
+    "title": "Retro Monster 348",
+    "desc": "Play Retro Monster 348 instantly in your browser! Simple, fast, and fun retro action.",
+    "category": "strategy",
+    "icon": "🧠",
+    "gradient": "pink"
+  },
+  {
+    "id": "349",
+    "title": "Extreme Builder 349",
+    "desc": "Play Extreme Builder 349 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "memory",
+    "icon": "🏃",
+    "gradient": "blue"
+  },
+  {
+    "id": "350",
+    "title": "Turbo Box 350",
+    "desc": "Play Turbo Box 350 instantly in your browser! Simple, fast, and fun turbo action.",
+    "category": "puzzle",
+    "icon": "♟️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "351",
+    "title": "Light Box 351",
+    "desc": "Play Light Box 351 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "memory",
+    "icon": "♟️",
+    "gradient": "orange"
+  },
+  {
+    "id": "352",
+    "title": "Shadow Runner 352",
+    "desc": "Play Shadow Runner 352 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "reflex",
+    "icon": "⚔️",
+    "gradient": "green"
+  },
+  {
+    "id": "353",
+    "title": "Furious Dragon 353",
+    "desc": "Play Furious Dragon 353 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "memory",
+    "icon": "🔥",
+    "gradient": "orange"
+  },
+  {
+    "id": "354",
+    "title": "Extreme Alien 354",
+    "desc": "Play Extreme Alien 354 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "memory",
+    "icon": "🚀",
+    "gradient": "pink"
+  },
+  {
+    "id": "355",
+    "title": "Quantum Shooter 355",
+    "desc": "Play Quantum Shooter 355 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "reflex",
+    "icon": "⚡",
+    "gradient": "cyan"
+  },
+  {
+    "id": "356",
+    "title": "Dark Shooter 356",
+    "desc": "Play Dark Shooter 356 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "strategy",
+    "icon": "🎯",
+    "gradient": "pink"
+  },
+  {
+    "id": "357",
+    "title": "Legendary Monster 357",
+    "desc": "Play Legendary Monster 357 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "arcade",
+    "icon": "🚗",
+    "gradient": "blue"
+  },
+  {
+    "id": "358",
+    "title": "Extreme Dodger 358",
+    "desc": "Play Extreme Dodger 358 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "memory",
+    "icon": "🔥",
+    "gradient": "purple"
+  },
+  {
+    "id": "359",
+    "title": "Shadow Alien 359",
+    "desc": "Play Shadow Alien 359 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "strategy",
+    "icon": "♟️",
+    "gradient": "orange"
+  },
+  {
+    "id": "360",
+    "title": "Mega Cube 360",
+    "desc": "Play Mega Cube 360 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "puzzle",
+    "icon": "🐸",
+    "gradient": "blue"
+  },
+  {
+    "id": "361",
+    "title": "Phantom Clicker 361",
+    "desc": "Play Phantom Clicker 361 instantly in your browser! Simple, fast, and fun phantom action.",
+    "category": "arcade",
+    "icon": "🏃",
+    "gradient": "green"
+  },
+  {
+    "id": "362",
+    "title": "Epic Runner 362",
+    "desc": "Play Epic Runner 362 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "arcade",
+    "icon": "⚽",
+    "gradient": "purple"
+  },
+  {
+    "id": "363",
+    "title": "Mad Breaker 363",
+    "desc": "Play Mad Breaker 363 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "puzzle",
+    "icon": "🧠",
+    "gradient": "orange"
+  },
+  {
+    "id": "364",
+    "title": "Extreme Shooter 364",
+    "desc": "Play Extreme Shooter 364 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "strategy",
+    "icon": "🎸",
+    "gradient": "pink"
+  },
+  {
+    "id": "365",
+    "title": "Fast Zombie 365",
+    "desc": "Play Fast Zombie 365 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "puzzle",
+    "icon": "⚡",
+    "gradient": "pink"
+  },
+  {
+    "id": "366",
+    "title": "Fast Matcher 366",
+    "desc": "Play Fast Matcher 366 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "memory",
+    "icon": "💎",
+    "gradient": "cyan"
+  },
+  {
+    "id": "367",
+    "title": "Extreme Fighter 367",
+    "desc": "Play Extreme Fighter 367 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "arcade",
+    "icon": "🚗",
+    "gradient": "orange"
+  },
+  {
+    "id": "368",
+    "title": "Hyper Shooter 368",
+    "desc": "Play Hyper Shooter 368 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "memory",
+    "icon": "🏃",
+    "gradient": "blue"
+  },
+  {
+    "id": "369",
+    "title": "Phantom Knight 369",
+    "desc": "Play Phantom Knight 369 instantly in your browser! Simple, fast, and fun phantom action.",
+    "category": "strategy",
+    "icon": "🎲",
+    "gradient": "orange"
+  },
+  {
+    "id": "370",
+    "title": "Retro Jumper 370",
+    "desc": "Play Retro Jumper 370 instantly in your browser! Simple, fast, and fun retro action.",
+    "category": "memory",
+    "icon": "🎲",
+    "gradient": "orange"
+  },
+  {
+    "id": "371",
+    "title": "Shadow Breaker 371",
+    "desc": "Play Shadow Breaker 371 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "reflex",
+    "icon": "🚗",
+    "gradient": "blue"
+  },
+  {
+    "id": "372",
+    "title": "Mad Breaker 372",
+    "desc": "Play Mad Breaker 372 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "arcade",
+    "icon": "♟️",
+    "gradient": "blue"
+  },
+  {
+    "id": "373",
+    "title": "Galactic Shooter 373",
+    "desc": "Play Galactic Shooter 373 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "arcade",
+    "icon": "🎲",
+    "gradient": "orange"
+  },
+  {
+    "id": "374",
+    "title": "Ultra Hero 374",
+    "desc": "Play Ultra Hero 374 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "reflex",
+    "icon": "💎",
+    "gradient": "cyan"
+  },
+  {
+    "id": "375",
+    "title": "Legendary Racer 375",
+    "desc": "Play Legendary Racer 375 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "puzzle",
+    "icon": "🎸",
+    "gradient": "orange"
+  },
+  {
+    "id": "376",
+    "title": "Mega Dragon 376",
+    "desc": "Play Mega Dragon 376 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "puzzle",
+    "icon": "🕹️",
+    "gradient": "purple"
+  },
+  {
+    "id": "377",
+    "title": "Quantum Ninja 377",
+    "desc": "Play Quantum Ninja 377 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "memory",
+    "icon": "⚡",
+    "gradient": "orange"
+  },
+  {
+    "id": "378",
+    "title": "Galactic Alien 378",
+    "desc": "Play Galactic Alien 378 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "strategy",
+    "icon": "🧩",
+    "gradient": "pink"
+  },
+  {
+    "id": "379",
+    "title": "Dark Smasher 379",
+    "desc": "Play Dark Smasher 379 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "puzzle",
+    "icon": "🔥",
+    "gradient": "blue"
+  },
+  {
+    "id": "380",
+    "title": "Hyper Dodger 380",
+    "desc": "Play Hyper Dodger 380 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "arcade",
+    "icon": "⚔️",
+    "gradient": "pink"
+  },
+  {
+    "id": "381",
+    "title": "Shadow Matcher 381",
+    "desc": "Play Shadow Matcher 381 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "arcade",
+    "icon": "🎈",
+    "gradient": "orange"
+  },
+  {
+    "id": "382",
+    "title": "Quantum Monster 382",
+    "desc": "Play Quantum Monster 382 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "strategy",
+    "icon": "🔥",
+    "gradient": "blue"
+  },
+  {
+    "id": "383",
+    "title": "Fast Wizard 383",
+    "desc": "Play Fast Wizard 383 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "strategy",
+    "icon": "👽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "384",
+    "title": "Retro Smasher 384",
+    "desc": "Play Retro Smasher 384 instantly in your browser! Simple, fast, and fun retro action.",
+    "category": "reflex",
+    "icon": "🎸",
+    "gradient": "cyan"
+  },
+  {
+    "id": "385",
+    "title": "Galactic Dragon 385",
+    "desc": "Play Galactic Dragon 385 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "puzzle",
+    "icon": "🧠",
+    "gradient": "cyan"
+  },
+  {
+    "id": "386",
+    "title": "Giga Monster 386",
+    "desc": "Play Giga Monster 386 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "memory",
+    "icon": "⚡",
+    "gradient": "purple"
+  },
+  {
+    "id": "387",
+    "title": "Legendary Fighter 387",
+    "desc": "Play Legendary Fighter 387 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "puzzle",
+    "icon": "⚽",
+    "gradient": "green"
+  },
+  {
+    "id": "388",
+    "title": "Light Knight 388",
+    "desc": "Play Light Knight 388 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "puzzle",
+    "icon": "👽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "389",
+    "title": "Mad Knight 389",
+    "desc": "Play Mad Knight 389 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "reflex",
+    "icon": "🚀",
+    "gradient": "orange"
+  },
+  {
+    "id": "390",
+    "title": "Phantom Racer 390",
+    "desc": "Play Phantom Racer 390 instantly in your browser! Simple, fast, and fun phantom action.",
+    "category": "arcade",
+    "icon": "🧩",
+    "gradient": "orange"
+  },
+  {
+    "id": "391",
+    "title": "Furious Racer 391",
+    "desc": "Play Furious Racer 391 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "puzzle",
+    "icon": "⚽",
+    "gradient": "blue"
+  },
+  {
+    "id": "392",
+    "title": "Extreme Racer 392",
+    "desc": "Play Extreme Racer 392 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "puzzle",
+    "icon": "💧",
+    "gradient": "green"
+  },
+  {
+    "id": "393",
+    "title": "Shadow Monster 393",
+    "desc": "Play Shadow Monster 393 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "strategy",
+    "icon": "🚗",
+    "gradient": "green"
+  },
+  {
+    "id": "394",
+    "title": "Fast Cube 394",
+    "desc": "Play Fast Cube 394 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "strategy",
+    "icon": "🎯",
+    "gradient": "green"
+  },
+  {
+    "id": "395",
+    "title": "Neon Dragon 395",
+    "desc": "Play Neon Dragon 395 instantly in your browser! Simple, fast, and fun neon action.",
+    "category": "strategy",
+    "icon": "🎲",
+    "gradient": "blue"
+  },
+  {
+    "id": "396",
+    "title": "Super Alien 396",
+    "desc": "Play Super Alien 396 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "memory",
+    "icon": "💎",
+    "gradient": "blue"
+  },
+  {
+    "id": "397",
+    "title": "Neon Knight 397",
+    "desc": "Play Neon Knight 397 instantly in your browser! Simple, fast, and fun neon action.",
+    "category": "puzzle",
+    "icon": "✨",
+    "gradient": "cyan"
+  },
+  {
+    "id": "398",
+    "title": "Mad Runner 398",
+    "desc": "Play Mad Runner 398 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "strategy",
+    "icon": "⚡",
+    "gradient": "blue"
+  },
+  {
+    "id": "399",
+    "title": "Fast Smasher 399",
+    "desc": "Play Fast Smasher 399 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "strategy",
+    "icon": "⚽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "400",
+    "title": "Giga Robot 400",
+    "desc": "Play Giga Robot 400 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "memory",
+    "icon": "💧",
+    "gradient": "blue"
+  },
+  {
+    "id": "401",
+    "title": "Quantum Alien 401",
+    "desc": "Play Quantum Alien 401 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "strategy",
+    "icon": "🕹️",
+    "gradient": "blue"
+  },
+  {
+    "id": "402",
+    "title": "Mega Matcher 402",
+    "desc": "Play Mega Matcher 402 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "memory",
+    "icon": "🎯",
+    "gradient": "orange"
+  },
+  {
+    "id": "403",
+    "title": "Cosmic Cube 403",
+    "desc": "Play Cosmic Cube 403 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "reflex",
+    "icon": "⚡",
+    "gradient": "pink"
+  },
+  {
+    "id": "404",
+    "title": "Magic Fighter 404",
+    "desc": "Play Magic Fighter 404 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "strategy",
+    "icon": "👽",
+    "gradient": "purple"
+  },
+  {
+    "id": "405",
+    "title": "Magic Dodger 405",
+    "desc": "Play Magic Dodger 405 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "memory",
+    "icon": "✨",
+    "gradient": "cyan"
+  },
+  {
+    "id": "406",
+    "title": "Quantum Builder 406",
+    "desc": "Play Quantum Builder 406 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "memory",
+    "icon": "⚔️",
+    "gradient": "blue"
+  },
+  {
+    "id": "407",
+    "title": "Epic Ninja 407",
+    "desc": "Play Epic Ninja 407 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "reflex",
+    "icon": "🎸",
+    "gradient": "orange"
+  },
+  {
+    "id": "408",
+    "title": "Mad Zombie 408",
+    "desc": "Play Mad Zombie 408 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "reflex",
+    "icon": "⚡",
+    "gradient": "green"
+  },
+  {
+    "id": "409",
+    "title": "Furious Runner 409",
+    "desc": "Play Furious Runner 409 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "strategy",
+    "icon": "⚔️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "410",
+    "title": "Fast Monster 410",
+    "desc": "Play Fast Monster 410 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "reflex",
+    "icon": "⚔️",
+    "gradient": "purple"
+  },
+  {
+    "id": "411",
+    "title": "Extreme Knight 411",
+    "desc": "Play Extreme Knight 411 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "reflex",
+    "icon": "🎸",
+    "gradient": "purple"
+  },
+  {
+    "id": "412",
+    "title": "Turbo Racer 412",
+    "desc": "Play Turbo Racer 412 instantly in your browser! Simple, fast, and fun turbo action.",
+    "category": "arcade",
+    "icon": "⚽",
+    "gradient": "purple"
+  },
+  {
+    "id": "413",
+    "title": "Extreme Knight 413",
+    "desc": "Play Extreme Knight 413 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "reflex",
+    "icon": "🏃",
+    "gradient": "purple"
+  },
+  {
+    "id": "414",
+    "title": "Fast Ninja 414",
+    "desc": "Play Fast Ninja 414 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "memory",
+    "icon": "🧠",
+    "gradient": "green"
+  },
+  {
+    "id": "415",
+    "title": "Furious Monster 415",
+    "desc": "Play Furious Monster 415 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "strategy",
+    "icon": "🧠",
+    "gradient": "pink"
+  },
+  {
+    "id": "416",
+    "title": "Cosmic Knight 416",
+    "desc": "Play Cosmic Knight 416 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "arcade",
+    "icon": "⚡",
+    "gradient": "pink"
+  },
+  {
+    "id": "417",
+    "title": "Crazy Racer 417",
+    "desc": "Play Crazy Racer 417 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "arcade",
+    "icon": "🎯",
+    "gradient": "purple"
+  },
+  {
+    "id": "418",
+    "title": "Cosmic Monster 418",
+    "desc": "Play Cosmic Monster 418 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "memory",
+    "icon": "♟️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "419",
+    "title": "Dark Runner 419",
+    "desc": "Play Dark Runner 419 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "reflex",
+    "icon": "✨",
+    "gradient": "purple"
+  },
+  {
+    "id": "420",
+    "title": "Mega Dragon 420",
+    "desc": "Play Mega Dragon 420 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "memory",
+    "icon": "🕹️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "421",
+    "title": "Mega Cube 421",
+    "desc": "Play Mega Cube 421 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "reflex",
+    "icon": "✨",
+    "gradient": "pink"
+  },
+  {
+    "id": "422",
+    "title": "Fast Knight 422",
+    "desc": "Play Fast Knight 422 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "puzzle",
+    "icon": "🎈",
+    "gradient": "green"
+  },
+  {
+    "id": "423",
+    "title": "Galactic Hero 423",
+    "desc": "Play Galactic Hero 423 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "strategy",
+    "icon": "⚽",
+    "gradient": "orange"
+  },
+  {
+    "id": "424",
+    "title": "Hyper Wizard 424",
+    "desc": "Play Hyper Wizard 424 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "arcade",
+    "icon": "💎",
+    "gradient": "purple"
+  },
+  {
+    "id": "425",
+    "title": "Legendary Shooter 425",
+    "desc": "Play Legendary Shooter 425 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "reflex",
+    "icon": "🚀",
+    "gradient": "pink"
+  },
+  {
+    "id": "426",
+    "title": "Fast Matcher 426",
+    "desc": "Play Fast Matcher 426 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "memory",
+    "icon": "♟️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "427",
+    "title": "Neon Shooter 427",
+    "desc": "Play Neon Shooter 427 instantly in your browser! Simple, fast, and fun neon action.",
+    "category": "arcade",
+    "icon": "🏃",
+    "gradient": "pink"
+  },
+  {
+    "id": "428",
+    "title": "Mad Smasher 428",
+    "desc": "Play Mad Smasher 428 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "arcade",
+    "icon": "🧩",
+    "gradient": "pink"
+  },
+  {
+    "id": "429",
+    "title": "Retro Cube 429",
+    "desc": "Play Retro Cube 429 instantly in your browser! Simple, fast, and fun retro action.",
+    "category": "memory",
+    "icon": "🕹️",
+    "gradient": "blue"
+  },
+  {
+    "id": "430",
+    "title": "Crazy Box 430",
+    "desc": "Play Crazy Box 430 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "strategy",
+    "icon": "🎯",
+    "gradient": "green"
+  },
+  {
+    "id": "431",
+    "title": "Giga Knight 431",
+    "desc": "Play Giga Knight 431 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "puzzle",
+    "icon": "⚔️",
+    "gradient": "purple"
+  },
+  {
+    "id": "432",
+    "title": "Hyper Fighter 432",
+    "desc": "Play Hyper Fighter 432 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "arcade",
+    "icon": "🎲",
+    "gradient": "pink"
+  },
+  {
+    "id": "433",
+    "title": "Shadow Monster 433",
+    "desc": "Play Shadow Monster 433 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "strategy",
+    "icon": "🧩",
+    "gradient": "orange"
+  },
+  {
+    "id": "434",
+    "title": "Crazy Matcher 434",
+    "desc": "Play Crazy Matcher 434 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "reflex",
+    "icon": "⚽",
+    "gradient": "purple"
+  },
+  {
+    "id": "435",
+    "title": "Mad Dragon 435",
+    "desc": "Play Mad Dragon 435 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "puzzle",
+    "icon": "🎲",
+    "gradient": "cyan"
+  },
+  {
+    "id": "436",
+    "title": "Ultra Builder 436",
+    "desc": "Play Ultra Builder 436 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "strategy",
+    "icon": "👽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "437",
+    "title": "Crazy Alien 437",
+    "desc": "Play Crazy Alien 437 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "puzzle",
+    "icon": "🎯",
+    "gradient": "purple"
+  },
+  {
+    "id": "438",
+    "title": "Legendary Shooter 438",
+    "desc": "Play Legendary Shooter 438 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "puzzle",
+    "icon": "💎",
+    "gradient": "orange"
+  },
+  {
+    "id": "439",
+    "title": "Crazy Cube 439",
+    "desc": "Play Crazy Cube 439 instantly in your browser! Simple, fast, and fun crazy action.",
+    "category": "puzzle",
+    "icon": "💧",
+    "gradient": "blue"
+  },
+  {
+    "id": "440",
+    "title": "Retro Alien 440",
+    "desc": "Play Retro Alien 440 instantly in your browser! Simple, fast, and fun retro action.",
+    "category": "memory",
+    "icon": "⚡",
+    "gradient": "cyan"
+  },
+  {
+    "id": "441",
+    "title": "Turbo Ninja 441",
+    "desc": "Play Turbo Ninja 441 instantly in your browser! Simple, fast, and fun turbo action.",
+    "category": "arcade",
+    "icon": "🎲",
+    "gradient": "cyan"
+  },
+  {
+    "id": "442",
+    "title": "Galactic Knight 442",
+    "desc": "Play Galactic Knight 442 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "strategy",
+    "icon": "🕹️",
+    "gradient": "purple"
+  },
+  {
+    "id": "443",
+    "title": "Dark Fighter 443",
+    "desc": "Play Dark Fighter 443 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "arcade",
+    "icon": "🏃",
+    "gradient": "green"
+  },
+  {
+    "id": "444",
+    "title": "Neon Cube 444",
+    "desc": "Play Neon Cube 444 instantly in your browser! Simple, fast, and fun neon action.",
+    "category": "strategy",
+    "icon": "💎",
+    "gradient": "pink"
+  },
+  {
+    "id": "445",
+    "title": "Magic Wizard 445",
+    "desc": "Play Magic Wizard 445 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "reflex",
+    "icon": "⚽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "446",
+    "title": "Mega Box 446",
+    "desc": "Play Mega Box 446 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "memory",
+    "icon": "🎈",
+    "gradient": "cyan"
+  },
+  {
+    "id": "447",
+    "title": "Mega Runner 447",
+    "desc": "Play Mega Runner 447 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "puzzle",
+    "icon": "🎈",
+    "gradient": "purple"
+  },
+  {
+    "id": "448",
+    "title": "Light Builder 448",
+    "desc": "Play Light Builder 448 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "strategy",
+    "icon": "💎",
+    "gradient": "orange"
+  },
+  {
+    "id": "449",
+    "title": "Epic Knight 449",
+    "desc": "Play Epic Knight 449 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "arcade",
+    "icon": "👽",
+    "gradient": "blue"
+  },
+  {
+    "id": "450",
+    "title": "Cosmic Hero 450",
+    "desc": "Play Cosmic Hero 450 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "arcade",
+    "icon": "⚽",
+    "gradient": "pink"
+  },
+  {
+    "id": "451",
+    "title": "Magic Wizard 451",
+    "desc": "Play Magic Wizard 451 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "strategy",
+    "icon": "👽",
+    "gradient": "orange"
+  },
+  {
+    "id": "452",
+    "title": "Magic Alien 452",
+    "desc": "Play Magic Alien 452 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "arcade",
+    "icon": "🧠",
+    "gradient": "purple"
+  },
+  {
+    "id": "453",
+    "title": "Shadow Fighter 453",
+    "desc": "Play Shadow Fighter 453 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "reflex",
+    "icon": "🎈",
+    "gradient": "orange"
+  },
+  {
+    "id": "454",
+    "title": "Mad Dodger 454",
+    "desc": "Play Mad Dodger 454 instantly in your browser! Simple, fast, and fun mad action.",
+    "category": "reflex",
+    "icon": "🧠",
+    "gradient": "purple"
+  },
+  {
+    "id": "455",
+    "title": "Mega Box 455",
+    "desc": "Play Mega Box 455 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "strategy",
+    "icon": "⚔️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "456",
+    "title": "Legendary Runner 456",
+    "desc": "Play Legendary Runner 456 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "memory",
+    "icon": "⚔️",
+    "gradient": "orange"
+  },
+  {
+    "id": "457",
+    "title": "Fast Runner 457",
+    "desc": "Play Fast Runner 457 instantly in your browser! Simple, fast, and fun fast action.",
+    "category": "arcade",
+    "icon": "🏃",
+    "gradient": "cyan"
+  },
+  {
+    "id": "458",
+    "title": "Cosmic Robot 458",
+    "desc": "Play Cosmic Robot 458 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "strategy",
+    "icon": "🧠",
+    "gradient": "cyan"
+  },
+  {
+    "id": "459",
+    "title": "Cosmic Racer 459",
+    "desc": "Play Cosmic Racer 459 instantly in your browser! Simple, fast, and fun cosmic action.",
+    "category": "strategy",
+    "icon": "✨",
+    "gradient": "blue"
+  },
+  {
+    "id": "460",
+    "title": "Dark Racer 460",
+    "desc": "Play Dark Racer 460 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "memory",
+    "icon": "♟️",
+    "gradient": "orange"
+  },
+  {
+    "id": "461",
+    "title": "Turbo Breaker 461",
+    "desc": "Play Turbo Breaker 461 instantly in your browser! Simple, fast, and fun turbo action.",
+    "category": "puzzle",
+    "icon": "💎",
+    "gradient": "green"
+  },
+  {
+    "id": "462",
+    "title": "Magic Hero 462",
+    "desc": "Play Magic Hero 462 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "strategy",
+    "icon": "⚔️",
+    "gradient": "orange"
+  },
+  {
+    "id": "463",
+    "title": "Furious Hero 463",
+    "desc": "Play Furious Hero 463 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "strategy",
+    "icon": "⚡",
+    "gradient": "blue"
+  },
+  {
+    "id": "464",
+    "title": "Giga Monster 464",
+    "desc": "Play Giga Monster 464 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "memory",
+    "icon": "⚽",
+    "gradient": "blue"
+  },
+  {
+    "id": "465",
+    "title": "Legendary Runner 465",
+    "desc": "Play Legendary Runner 465 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "reflex",
+    "icon": "🎸",
+    "gradient": "purple"
+  },
+  {
+    "id": "466",
+    "title": "Shadow Dodger 466",
+    "desc": "Play Shadow Dodger 466 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "puzzle",
+    "icon": "⚡",
+    "gradient": "pink"
+  },
+  {
+    "id": "467",
+    "title": "Turbo Ninja 467",
+    "desc": "Play Turbo Ninja 467 instantly in your browser! Simple, fast, and fun turbo action.",
+    "category": "arcade",
+    "icon": "🔥",
+    "gradient": "blue"
+  },
+  {
+    "id": "468",
+    "title": "Epic Shooter 468",
+    "desc": "Play Epic Shooter 468 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "puzzle",
+    "icon": "🚗",
+    "gradient": "green"
+  },
+  {
+    "id": "469",
+    "title": "Giga Wizard 469",
+    "desc": "Play Giga Wizard 469 instantly in your browser! Simple, fast, and fun giga action.",
+    "category": "strategy",
+    "icon": "🔥",
+    "gradient": "cyan"
+  },
+  {
+    "id": "470",
+    "title": "Mega Dodger 470",
+    "desc": "Play Mega Dodger 470 instantly in your browser! Simple, fast, and fun mega action.",
+    "category": "puzzle",
+    "icon": "♟️",
+    "gradient": "blue"
+  },
+  {
+    "id": "471",
+    "title": "Extreme Hero 471",
+    "desc": "Play Extreme Hero 471 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "arcade",
+    "icon": "🧠",
+    "gradient": "pink"
+  },
+  {
+    "id": "472",
+    "title": "Magic Zombie 472",
+    "desc": "Play Magic Zombie 472 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "strategy",
+    "icon": "⚡",
+    "gradient": "orange"
+  },
+  {
+    "id": "473",
+    "title": "Magic Matcher 473",
+    "desc": "Play Magic Matcher 473 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "memory",
+    "icon": "✨",
+    "gradient": "orange"
+  },
+  {
+    "id": "474",
+    "title": "Ultra Clicker 474",
+    "desc": "Play Ultra Clicker 474 instantly in your browser! Simple, fast, and fun ultra action.",
+    "category": "reflex",
+    "icon": "♟️",
+    "gradient": "blue"
+  },
+  {
+    "id": "475",
+    "title": "Furious Smasher 475",
+    "desc": "Play Furious Smasher 475 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "memory",
+    "icon": "✨",
+    "gradient": "cyan"
+  },
+  {
+    "id": "476",
+    "title": "Pixel Dodger 476",
+    "desc": "Play Pixel Dodger 476 instantly in your browser! Simple, fast, and fun pixel action.",
+    "category": "arcade",
+    "icon": "🎯",
+    "gradient": "green"
+  },
+  {
+    "id": "477",
+    "title": "Light Wizard 477",
+    "desc": "Play Light Wizard 477 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "puzzle",
+    "icon": "🧠",
+    "gradient": "blue"
+  },
+  {
+    "id": "478",
+    "title": "Galactic Dodger 478",
+    "desc": "Play Galactic Dodger 478 instantly in your browser! Simple, fast, and fun galactic action.",
+    "category": "arcade",
+    "icon": "💧",
+    "gradient": "pink"
+  },
+  {
+    "id": "479",
+    "title": "Dark Hero 479",
+    "desc": "Play Dark Hero 479 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "reflex",
+    "icon": "💧",
+    "gradient": "blue"
+  },
+  {
+    "id": "480",
+    "title": "Quantum Dragon 480",
+    "desc": "Play Quantum Dragon 480 instantly in your browser! Simple, fast, and fun quantum action.",
+    "category": "puzzle",
+    "icon": "🏃",
+    "gradient": "pink"
+  },
+  {
+    "id": "481",
+    "title": "Legendary Breaker 481",
+    "desc": "Play Legendary Breaker 481 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "memory",
+    "icon": "🎈",
+    "gradient": "purple"
+  },
+  {
+    "id": "482",
+    "title": "Phantom Dragon 482",
+    "desc": "Play Phantom Dragon 482 instantly in your browser! Simple, fast, and fun phantom action.",
+    "category": "puzzle",
+    "icon": "♟️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "483",
+    "title": "Epic Builder 483",
+    "desc": "Play Epic Builder 483 instantly in your browser! Simple, fast, and fun epic action.",
+    "category": "arcade",
+    "icon": "🎯",
+    "gradient": "cyan"
+  },
+  {
+    "id": "484",
+    "title": "Magic Dodger 484",
+    "desc": "Play Magic Dodger 484 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "strategy",
+    "icon": "🎸",
+    "gradient": "blue"
+  },
+  {
+    "id": "485",
+    "title": "Shadow Dodger 485",
+    "desc": "Play Shadow Dodger 485 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "arcade",
+    "icon": "🎲",
+    "gradient": "pink"
+  },
+  {
+    "id": "486",
+    "title": "Extreme Smasher 486",
+    "desc": "Play Extreme Smasher 486 instantly in your browser! Simple, fast, and fun extreme action.",
+    "category": "memory",
+    "icon": "🏃",
+    "gradient": "pink"
+  },
+  {
+    "id": "487",
+    "title": "Shadow Alien 487",
+    "desc": "Play Shadow Alien 487 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "puzzle",
+    "icon": "👽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "488",
+    "title": "Legendary Fighter 488",
+    "desc": "Play Legendary Fighter 488 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "memory",
+    "icon": "🔥",
+    "gradient": "green"
+  },
+  {
+    "id": "489",
+    "title": "Light Hero 489",
+    "desc": "Play Light Hero 489 instantly in your browser! Simple, fast, and fun light action.",
+    "category": "strategy",
+    "icon": "💧",
+    "gradient": "cyan"
+  },
+  {
+    "id": "490",
+    "title": "Shadow Zombie 490",
+    "desc": "Play Shadow Zombie 490 instantly in your browser! Simple, fast, and fun shadow action.",
+    "category": "strategy",
+    "icon": "⚡",
+    "gradient": "blue"
+  },
+  {
+    "id": "491",
+    "title": "Dark Matcher 491",
+    "desc": "Play Dark Matcher 491 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "puzzle",
+    "icon": "🧩",
+    "gradient": "cyan"
+  },
+  {
+    "id": "492",
+    "title": "Legendary Wizard 492",
+    "desc": "Play Legendary Wizard 492 instantly in your browser! Simple, fast, and fun legendary action.",
+    "category": "arcade",
+    "icon": "⚽",
+    "gradient": "green"
+  },
+  {
+    "id": "493",
+    "title": "Retro Zombie 493",
+    "desc": "Play Retro Zombie 493 instantly in your browser! Simple, fast, and fun retro action.",
+    "category": "puzzle",
+    "icon": "👽",
+    "gradient": "cyan"
+  },
+  {
+    "id": "494",
+    "title": "Phantom Clicker 494",
+    "desc": "Play Phantom Clicker 494 instantly in your browser! Simple, fast, and fun phantom action.",
+    "category": "puzzle",
+    "icon": "⚔️",
+    "gradient": "blue"
+  },
+  {
+    "id": "495",
+    "title": "Dark Robot 495",
+    "desc": "Play Dark Robot 495 instantly in your browser! Simple, fast, and fun dark action.",
+    "category": "strategy",
+    "icon": "✨",
+    "gradient": "cyan"
+  },
+  {
+    "id": "496",
+    "title": "Retro Cube 496",
+    "desc": "Play Retro Cube 496 instantly in your browser! Simple, fast, and fun retro action.",
+    "category": "puzzle",
+    "icon": "🐸",
+    "gradient": "green"
+  },
+  {
+    "id": "497",
+    "title": "Furious Clicker 497",
+    "desc": "Play Furious Clicker 497 instantly in your browser! Simple, fast, and fun furious action.",
+    "category": "puzzle",
+    "icon": "🎈",
+    "gradient": "orange"
+  },
+  {
+    "id": "498",
+    "title": "Magic Dragon 498",
+    "desc": "Play Magic Dragon 498 instantly in your browser! Simple, fast, and fun magic action.",
+    "category": "arcade",
+    "icon": "⚔️",
+    "gradient": "blue"
+  },
+  {
+    "id": "499",
+    "title": "Hyper Cube 499",
+    "desc": "Play Hyper Cube 499 instantly in your browser! Simple, fast, and fun hyper action.",
+    "category": "strategy",
+    "icon": "🎸",
+    "gradient": "cyan"
+  },
+  {
+    "id": "500",
+    "title": "Super Fighter 500",
+    "desc": "Play Super Fighter 500 instantly in your browser! Simple, fast, and fun super action.",
+    "category": "memory",
+    "icon": "♟️",
+    "gradient": "cyan"
+  },
+  {
+    "id": "501",
+    "title": "Neon Racer",
+    "desc": "Thrilling car racing action in Neon Racer. Beat your high score!",
+    "category": "racing",
+    "icon": "🏎️",
+    "gradient": "orange"
+  },
+  {
+    "id": "502",
+    "title": "Midnight Racer",
+    "desc": "Thrilling car racing action in Midnight Racer. Beat your high score!",
+    "category": "racing",
+    "icon": "🏎️",
+    "gradient": "orange"
+  },
+  {
+    "id": "503",
+    "title": "Turbo Racer",
+    "desc": "Thrilling car racing action in Turbo Racer. Beat your high score!",
+    "category": "racing",
+    "icon": "🏎️",
+    "gradient": "orange"
+  },
+  {
+    "id": "504",
+    "title": "Drift Racer",
+    "desc": "Thrilling car racing action in Drift Racer. Beat your high score!",
+    "category": "racing",
+    "icon": "🏎️",
+    "gradient": "orange"
+  },
+  {
+    "id": "505",
+    "title": "Highway Racer",
+    "desc": "Thrilling car racing action in Highway Racer. Beat your high score!",
+    "category": "racing",
+    "icon": "🏎️",
+    "gradient": "orange"
+  },
+  {
+    "id": "506",
+    "title": "Street Racer",
+    "desc": "Thrilling car racing action in Street Racer. Beat your high score!",
+    "category": "racing",
+    "icon": "🏎️",
+    "gradient": "orange"
+  },
+  {
+    "id": "507",
+    "title": "Nitro Racer",
+    "desc": "Thrilling car racing action in Nitro Racer. Beat your high score!",
+    "category": "racing",
+    "icon": "🏎️",
+    "gradient": "orange"
+  },
+  {
+    "id": "508",
+    "title": "Cyber Racer",
+    "desc": "Thrilling car racing action in Cyber Racer. Beat your high score!",
+    "category": "racing",
+    "icon": "🏎️",
+    "gradient": "orange"
+  },
+  {
+    "id": "509",
+    "title": "Urban Racer",
+    "desc": "Thrilling car racing action in Urban Racer. Beat your high score!",
+    "category": "racing",
+    "icon": "🏎️",
+    "gradient": "orange"
+  },
+  {
+    "id": "510",
+    "title": "Desert Racer",
+    "desc": "Thrilling car racing action in Desert Racer. Beat your high score!",
+    "category": "racing",
+    "icon": "🏎️",
+    "gradient": "orange"
+  },
+  {
+    "id": "511",
+    "title": "City Racer",
+    "desc": "Thrilling car racing action in City Racer. Beat your high score!",
+    "category": "racing",
+    "icon": "🏎️",
+    "gradient": "orange"
+  },
+  {
+    "id": "512",
+    "title": "Speed Racer",
+    "desc": "Thrilling car racing action in Speed Racer. Beat your high score!",
+    "category": "racing",
+    "icon": "🏎️",
+    "gradient": "orange"
+  },
+  {
+    "id": "513",
+    "title": "Formula Racer",
+    "desc": "Thrilling car racing action in Formula Racer. Beat your high score!",
+    "category": "racing",
+    "icon": "🏎️",
+    "gradient": "orange"
+  },
+  {
+    "id": "514",
+    "title": "Rally Racer",
+    "desc": "Thrilling car racing action in Rally Racer. Beat your high score!",
+    "category": "racing",
+    "icon": "🏎️",
+    "gradient": "orange"
+  },
+  {
+    "id": "515",
+    "title": "Furious Racer",
+    "desc": "Thrilling car racing action in Furious Racer. Beat your high score!",
+    "category": "racing",
+    "icon": "🏎️",
+    "gradient": "orange"
+  },
+  {
+    "id": "516",
+    "title": "Galactic Invaders",
+    "desc": "Epic space battles await in Galactic Invaders. Destroy the enemies!",
+    "category": "battle",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "517",
+    "title": "Space Invaders",
+    "desc": "Epic space battles await in Space Invaders. Destroy the enemies!",
+    "category": "battle",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "518",
+    "title": "Alien Invaders",
+    "desc": "Epic space battles await in Alien Invaders. Destroy the enemies!",
+    "category": "battle",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "519",
+    "title": "Star Invaders",
+    "desc": "Epic space battles await in Star Invaders. Destroy the enemies!",
+    "category": "battle",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "520",
+    "title": "Neon Invaders",
+    "desc": "Epic space battles await in Neon Invaders. Destroy the enemies!",
+    "category": "battle",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "521",
+    "title": "Cosmic Invaders",
+    "desc": "Epic space battles await in Cosmic Invaders. Destroy the enemies!",
+    "category": "battle",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "522",
+    "title": "Void Invaders",
+    "desc": "Epic space battles await in Void Invaders. Destroy the enemies!",
+    "category": "battle",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "523",
+    "title": "Orbit Invaders",
+    "desc": "Epic space battles await in Orbit Invaders. Destroy the enemies!",
+    "category": "battle",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "524",
+    "title": "Galaxy Invaders",
+    "desc": "Epic space battles await in Galaxy Invaders. Destroy the enemies!",
+    "category": "battle",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "525",
+    "title": "Pixel Invaders",
+    "desc": "Epic space battles await in Pixel Invaders. Destroy the enemies!",
+    "category": "battle",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "526",
+    "title": "Astro Invaders",
+    "desc": "Epic space battles await in Astro Invaders. Destroy the enemies!",
+    "category": "battle",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "527",
+    "title": "Quantum Invaders",
+    "desc": "Epic space battles await in Quantum Invaders. Destroy the enemies!",
+    "category": "battle",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "528",
+    "title": "Plasma Invaders",
+    "desc": "Epic space battles await in Plasma Invaders. Destroy the enemies!",
+    "category": "battle",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "529",
+    "title": "Nova Invaders",
+    "desc": "Epic space battles await in Nova Invaders. Destroy the enemies!",
+    "category": "battle",
+    "icon": "🚀",
+    "gradient": "blue"
+  },
+  {
+    "id": "530",
+    "title": "Titan Invaders",
+    "desc": "Epic space battles await in Titan Invaders. Destroy the enemies!",
+    "category": "battle",
+    "icon": "🚀",
+    "gradient": "blue"
+  }
+];
+
+    // ===== RENDER GAMES =====
+    const gamesGrid = document.getElementById('gamesGrid');
+    function renderGames(filter = 'all', search = '') {
+      const filtered = games.filter(g => {
+        const matchFilter = filter === 'all' || g.category === filter;
+        const matchSearch = g.title.toLowerCase().includes(search.toLowerCase()) || g.desc.toLowerCase().includes(search.toLowerCase());
+        return matchFilter && matchSearch;
+      });
+      gamesGrid.innerHTML = filtered.map((g, i) => `
+        <a href="games/game-${g.id}.html" class="game-card card-gradient-${g.gradient}" style="animation-delay:${i*0.05}s" id="game-${g.id}">
+          <div class="game-card-thumb">${g.icon}</div>
+          <div class="game-card-body">
+            <div class="game-card-category">${g.category}</div>
+            <div class="game-card-title">${g.title}</div>
+            <div class="game-card-desc">${g.desc}</div>
+          </div>
+          <div class="game-card-footer">
+            <span class="game-card-play">Play Now ▸</span>
+            <span class="game-card-meta">Free</span>
+          </div>
+        </a>
+      `).join('');
+      if (!filtered.length) {
+        gamesGrid.innerHTML = '<p style="color:var(--text-muted);text-align:center;grid-column:1/-1;padding:40px 0">No games found matching your search.</p>';
+      }
+    }
+    renderGames();
+
+
+
+    // ===== SEARCH =====
+    document.getElementById('searchGames').addEventListener('input', e => {
+      const activeFilter = document.querySelector('.filter-tag.active').dataset.filter;
+      renderGames(activeFilter, e.target.value);
+    });
+
+    // ===== FILTERS =====
+    document.querySelectorAll('.filter-tag').forEach(tag => {
+      tag.addEventListener('click', () => {
+        document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+        tag.classList.add('active');
+        renderGames(tag.dataset.filter, document.getElementById('searchGames').value);
+      });
+    });
+
+    // ===== MOBILE MENU =====
+    document.getElementById('menuBtn').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    // ===== NAVBAR SCROLL =====
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // ===== HERO PARTICLES =====
+    const particlesEl = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.className = 'hero-particle';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.top = Math.random() * 100 + '%';
+      p.style.animationDelay = Math.random() * 8 + 's';
+      p.style.animationDuration = (6 + Math.random() * 6) + 's';
+      const colors = ['var(--accent-primary)', 'var(--accent-pink)', 'var(--accent-blue)', 'var(--accent-cyan)'];
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      particlesEl.appendChild(p);
+    }
+  </script>
+</body>
+</html>
