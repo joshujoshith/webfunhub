@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Void Invaders - WebFunHub</title><meta name="description" content="Intense Void Invaders space battle game. Defend your ship!">
+<link rel="stylesheet" href="../style.css"></head><body>
+<nav class="navbar" id="nb"><a href="../index.html" class="nav-brand"><div class="nav-brand-icon">W</div><span class="nav-brand-text">WebFunHub</span></a>
+<ul class="nav-links" id="nl"><li><a href="../index.html">Home</a></li><li><a href="../index.html#games" class="active">Games</a></li></ul>
+<button class="nav-menu-btn" id="mb" aria-label="Menu">☰</button></nav>
+<div class="ad-banner" style="margin-top:80px;max-width:728px">Ad Space</div>
+<main class="game-page"><div class="game-page-header"><a href="../index.html#games" class="game-page-back">← Back</a>
+<h1 class="game-page-title">Void Invaders</h1><div class="game-page-meta"><span class="game-page-tag" style="text-transform:capitalize">battle</span></div></div>
+<div class="game-container">
+<div class="game-score-bar">
+<div class="game-score-item"><span class="game-score-label">Score</span><span class="game-score-value" id="sc">0</span></div>
+<div class="game-score-item"><span class="game-score-label">High Score</span><span class="game-score-value" id="hi">0</span></div>
+</div>
+<div class="game-canvas-wrap" style="padding:0;overflow:hidden;background:#111;position:relative;display:flex;justify-content:center;">
+<canvas id="c" width="400" height="600" style="max-width:100%;background:#222;box-shadow:0 0 20px rgba(0,0,0,0.5);"></canvas>
+<div id="over" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(4px);flex-direction:column;align-items:center;justify-content:center;color:#fff;">
+<h2 style="font-size:3rem;margin-bottom:10px;font-family:Outfit;color:var(--accent-secondary)">GAME OVER</h2>
+<p style="font-size:1.2rem;margin-bottom:20px">Score: <span id="fsc">0</span></p>
+<button class="game-btn game-btn-primary" onclick="init()">Play Again</button>
+</div>
+</div>
+<div class="game-controls"><button class="game-btn game-btn-primary" onclick="init()">↻ Restart</button></div>
+</div>
+<div class="game-instructions" style="margin:0 24px 24px"><h3>📖 How to Play</h3><ul><li>Use <b>Mouse/Touch</b> to slide your ship.</li><li>Shoot falling enemies automatically. Don't let them hit you or the bottom!</li></ul></div>
+<script>
+const cvs = document.getElementById('c'), ctx = cvs.getContext('2d');
+let sc=0, hi=localStorage.getItem('bathhi')||0, state=0; 
+let player, bullets, enemies, frame;
+document.getElementById('hi').textContent = hi;
+
+function init() {
+  player = {x: 180, y: 520, w: 40, h: 40, c: '#06b6d4'};
+  bullets = []; enemies = [];
+  sc = 0; frame = 0; state = 1;
+  document.getElementById('over').style.display='none';
+  document.getElementById('sc').textContent=sc;
+  loop();
+}
+
+function loop() {
+  if(state!==1) return;
+  requestAnimationFrame(loop);
+  ctx.fillStyle='#0f172a'; ctx.fillRect(0,0,400,600);
+  
+  // Stars
+  ctx.fillStyle='#fff';
+  for(let i=0;i<20;i++) {
+    let sy = (Array(20).fill(0).map((_,i)=>(i*30 + frame)%600))[i];
+    ctx.globalAlpha = Math.random();
+    ctx.fillRect(Math.abs(Math.sin(i*23)*400), sy, 2, 2);
+  }
+  ctx.globalAlpha = 1;
+
+  // Player
+  ctx.fillStyle=player.c;
+  ctx.beginPath();
+  ctx.moveTo(player.x+20, player.y);
+  ctx.lineTo(player.x+40, player.y+40);
+  ctx.lineTo(player.x, player.y+40);
+  ctx.fill();
+
+  // Shoot
+  if(frame % 12 === 0) {
+    bullets.push({x: player.x+18, y: player.y, w: 4, h: 10});
+  }
+
+  // Bullets
+  ctx.fillStyle='#f59e0b';
+  for(let i=bullets.length-1; i>=0; i--) {
+    let b = bullets[i];
+    b.y -= 10;
+    ctx.fillRect(b.x, b.y, b.w, b.h);
+    if(b.y < -10) bullets.splice(i,1);
+  }
+
+  // Enemies
+  if(frame % 44 === 0) {
+    enemies.push({x: Math.random()*360, y: -40, w: 30, h: 30, hp: 1});
+  }
+
+  ctx.fillStyle='#ef4444';
+  for(let i=enemies.length-1; i>=0; i--) {
+    let e = enemies[i];
+    e.y += 2.7 + (sc/50);
+    ctx.fillRect(e.x, e.y, e.w, e.h);
+    
+    // Hit by bullet
+    for(let j=bullets.length-1; j>=0; j--) {
+      let b = bullets[j];
+      if(b.x < e.x+e.w && b.x+b.w > e.x && b.y < e.y+e.h && b.h+b.y > e.y) {
+        enemies.splice(i,1);
+        bullets.splice(j,1);
+        sc+=10; document.getElementById('sc').textContent=sc;
+        break;
+      }
+    }
+    
+    // Hit player or bottom
+    if(e && ((player.x < e.x+e.w && player.x+player.w > e.x && player.y < e.y+e.h && player.h+player.y > e.y) || e.y > 600)) {
+      state = 2; // game over
+      document.getElementById('fsc').textContent = sc;
+      if(sc>hi) { hi = sc; localStorage.setItem('bathhi', hi); document.getElementById('hi').textContent=hi; }
+      document.getElementById('over').style.display='flex';
+      return;
+    }
+  }
+
+  frame++;
+}
+
+function move(cx) {
+  if(state!==1) return;
+  const rect = cvs.getBoundingClientRect();
+  const scaleX = cvs.width / rect.width;
+  let x = (cx - rect.left) * scaleX - player.w/2;
+  player.x = Math.max(0, Math.min(360, x));
+}
+
+cvs.addEventListener('mousemove', e => move(e.clientX));
+cvs.addEventListener('touchmove', e => {
+  e.preventDefault();
+  move(e.touches[0].clientX);
+}, {passive:false});
+
+init();
+</script>

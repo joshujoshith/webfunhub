@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Desert Racer - WebFunHub</title><meta name="description" content="High speed Desert Racer car racing game. Dodge traffic and survive!">
+<link rel="stylesheet" href="../style.css"></head><body>
+<nav class="navbar" id="nb"><a href="../index.html" class="nav-brand"><div class="nav-brand-icon">W</div><span class="nav-brand-text">WebFunHub</span></a>
+<ul class="nav-links" id="nl"><li><a href="../index.html">Home</a></li><li><a href="../index.html#games" class="active">Games</a></li></ul>
+<button class="nav-menu-btn" id="mb" aria-label="Menu">☰</button></nav>
+<div class="ad-banner" style="margin-top:80px;max-width:728px">Ad Space</div>
+<main class="game-page"><div class="game-page-header"><a href="../index.html#games" class="game-page-back">← Back</a>
+<h1 class="game-page-title">Desert Racer</h1><div class="game-page-meta"><span class="game-page-tag" style="text-transform:capitalize">racing</span></div></div>
+<div class="game-container">
+<div class="game-score-bar">
+<div class="game-score-item"><span class="game-score-label">Score</span><span class="game-score-value" id="sc">0</span></div>
+<div class="game-score-item"><span class="game-score-label">High Score</span><span class="game-score-value" id="hi">0</span></div>
+</div>
+<div class="game-canvas-wrap" style="padding:0;overflow:hidden;background:#111;position:relative;display:flex;justify-content:center;">
+<canvas id="c" width="400" height="600" style="max-width:100%;background:#222;box-shadow:0 0 20px rgba(0,0,0,0.5);"></canvas>
+<div id="over" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(4px);flex-direction:column;align-items:center;justify-content:center;color:#fff;">
+<h2 style="font-size:3rem;margin-bottom:10px;font-family:Outfit;color:var(--accent-secondary)">GAME OVER</h2>
+<p style="font-size:1.2rem;margin-bottom:20px">Score: <span id="fsc">0</span></p>
+<button class="game-btn game-btn-primary" onclick="init()">Play Again</button>
+</div>
+</div>
+<div class="game-controls"><button class="game-btn game-btn-primary" onclick="init()">↻ Restart</button></div>
+</div>
+<div class="game-instructions" style="margin:0 24px 24px"><h3>📖 How to Play</h3><ul><li>Use <b>Left/Right Arrows</b> or <b>Tap sides</b> to steer your car.</li><li>Dodge traffic and survive as long as possible!</li></ul></div>
+<script>
+const cvs = document.getElementById('c'), ctx = cvs.getContext('2d');
+let sc=0, hi=localStorage.getItem('carhi')||0, state=0; // 0=menu, 1=play, 2=over
+let player, enemies, frame, speed=9.5;
+document.getElementById('hi').textContent = hi;
+
+function init() {
+  player = {x: 175, y: 500, w: 50, h: 80, c: '#3b82f6'};
+  enemies = [];
+  sc = 0; frame = 0; state = 1;
+  document.getElementById('over').style.display='none';
+  document.getElementById('sc').textContent=sc;
+  loop();
+}
+
+function drawCar(x,y,w,h,c) {
+  ctx.fillStyle=c; ctx.fillRect(x,y,w,h);
+  ctx.fillStyle='#111'; ctx.fillRect(x-5,y+10,10,20); ctx.fillRect(x+w-5,y+10,10,20);
+  ctx.fillRect(x-5,y+50,10,20); ctx.fillRect(x+w-5,y+50,10,20);
+  ctx.fillStyle='#888'; ctx.fillRect(x+10,y+15,w-20,15); ctx.fillRect(x+10,y+50,w-20,10);
+}
+
+function loop() {
+  if(state!==1) return;
+  requestAnimationFrame(loop);
+  ctx.fillStyle='#15803d'; ctx.fillRect(0,0,400,600);
+  
+  // Roads
+  ctx.fillStyle='#444'; ctx.fillRect(50,0,300,600);
+  ctx.fillStyle='#fff';
+  for(let i=0; i<600; i+=60) {
+    if((i+frame*speed)%60 < 30) {
+      ctx.fillRect(145, i, 10, 30);
+      ctx.fillRect(245, i, 10, 30);
+    }
+  }
+
+  // Player
+  drawCar(player.x, player.y, player.w, player.h, player.c);
+
+  // Enemies
+  if(frame % 31 === 0) {
+    let lanes = [65, 165, 265];
+    enemies.push({x: lanes[Math.floor(Math.random()*3)], y: -100, w: 50, h: 80, c: ['#ef4444','#f59e0b','#ec4899','#10b981'][Math.floor(Math.random()*4)]});
+  }
+
+  for(let i=enemies.length-1; i>=0; i--) {
+    let e = enemies[i];
+    e.y += speed * 0.8 + Math.random()*2; // slight diff speeds
+    drawCar(e.x, e.y, e.w, e.h, e.c);
+    
+    // Collision
+    if(player.x < e.x+e.w && player.x+player.w > e.x && player.y < e.y+e.h && player.h+player.y > e.y) {
+      state = 2; // crash
+      document.getElementById('fsc').textContent = Math.floor(sc);
+      if(Math.floor(sc)>hi) { hi = Math.floor(sc); localStorage.setItem('carhi', hi); document.getElementById('hi').textContent=hi; }
+      document.getElementById('over').style.display='flex';
+      return;
+    }
+    
+    if(e.y > 600) { enemies.splice(i, 1); }
+  }
+
+  sc += 0.05 * speed;
+  document.getElementById('sc').textContent = Math.floor(sc);
+  if(frame%300===0) speed+=0.2; // Increase speed over time
+  frame++;
+}
+
+window.addEventListener('keydown', e => {
+  if(state!==1) return;
+  if(e.key==='ArrowLeft' && player.x > 55) player.x -= 100;
+  if(e.key==='ArrowRight' && player.x < 250) player.x += 100;
+});
+cvs.addEventListener('mousedown', e => {
+  if(state!==1) return;
+  const rect = cvs.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  if(x < rect.width/2 && player.x > 55) player.x -= 100;
+  else if(x >= rect.width/2 && player.x < 250) player.x += 100;
+});
+cvs.addEventListener('touchstart', e => {
+  e.preventDefault();
+  if(state!==1) return;
+  const rect = cvs.getBoundingClientRect();
+  const touch = e.touches[0];
+  const x = touch.clientX - rect.left;
+  if(x < rect.width/2 && player.x > 55) player.x -= 100;
+  else if(x >= rect.width/2 && player.x < 250) player.x += 100;
+}, {passive:false});
+
+init();
+</script>
