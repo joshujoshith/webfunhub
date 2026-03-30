@@ -1,0 +1,27 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mad Smasher 255 - WebFunHub</title><meta name="description" content="Play Mad Smasher 255 instantly in your browser! Simple, fast, and fun mad action.">
+<link rel="stylesheet" href="../style.css"></head><body>
+<nav class="navbar" id="nb"><a href="../index.html" class="nav-brand"><div class="nav-brand-icon">W</div><span class="nav-brand-text">WebFunHub</span></a>
+<ul class="nav-links" id="nl"><li><a href="../index.html">Home</a></li><li><a href="../index.html#games" class="active">Games</a></li></ul>
+<button class="nav-menu-btn" id="mb" aria-label="Menu">☰</button></nav>
+<div class="ad-banner" style="margin-top:80px;max-width:728px">Ad Space</div>
+<main class="game-page"><div class="game-page-header"><a href="../index.html#games" class="game-page-back">← Back</a>
+<h1 class="game-page-title">Mad Smasher 255</h1><div class="game-page-meta"><span class="game-page-tag" style="text-transform:capitalize">arcade</span></div></div>
+<div class="game-container"><div class="game-score-bar">
+<div class="game-score-item"><span class="game-score-label">Score</span><span class="game-score-value" id="sc">0</span></div>
+<div class="game-score-item"><span class="game-score-label">Goal</span><span class="game-score-value">43</span></div></div>
+<div style="padding:10vh 0;text-align:center;background:var(--bg-secondary)">
+  <button style="font-size:6rem;background:none;border:none;cursor:pointer;transition:transform 0.1s" onmousedown="this.style.transform='scale(0.85)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'" onclick="c()">🚗</button>
+  <h2 id="msg" style="margin-top:30px;font-size:2rem;display:none;color:var(--accent-secondary);font-family:Outfit">Level Completed! 🎉</h2>
+</div>
+<div class="game-controls"><button class="game-btn game-btn-primary" onclick="r()">↻ Retry</button></div>
+<div class="game-instructions" style="margin:24px"><h3>📖 How to Play</h3><ul><li>Click the 🚗 as fast as you can to reach the goal of 43!</li></ul></div>
+</div>
+<script>
+let sc=0, max=43, done=false;
+function c(){if(done)return;sc++;document.getElementById('sc').textContent=sc;if(sc>=max){done=true;document.getElementById('msg').style.display='block';}}
+function r(){sc=0;done=false;document.getElementById('sc').textContent=sc;document.getElementById('msg').style.display='none';}
+</script></main><div class="ad-banner" style="max-width:728px;margin:24px auto">Ad Space</div>
+<footer class="footer"><div class="footer-bottom">© 2026 WebFunHub</div></footer>
+<script>document.getElementById('mb').onclick=()=>document.getElementById('nl').classList.toggle('open');
+window.onscroll=()=>document.getElementById('nb').classList.toggle('scrolled',scrollY>20);</script></body></html>
